@@ -20,21 +20,19 @@
 	}
 </script>
 
-<div class="w-1/3 self-end flex flex-col justify-between">
+<div class="xl:self-end flex flex-col justify-between w-[350px]">
 	<Answer />
 
 	<InputNames />
 
-	<div class="mt-10">
+	<div class="mt-10 w-fit">
 		<p class="opacity-70">Enter a country name</p>
-		<div class="w-1/3">
-			<input
-				disabled={$names.length >= 5}
-				on:keydown={enterName}
-				bind:this={userInput}
-				type="text"
-				class="input input-bordered input-accent"
-			/>
-		</div>
+		<input
+			disabled={$names.length >= 5}
+			on:keydown={enterName}
+			bind:this={userInput}
+			type="text"
+			class="input input-sm xl:input-md input-bordered input-accent"
+		/>
 	</div>
 </div>

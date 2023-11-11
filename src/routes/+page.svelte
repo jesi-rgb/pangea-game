@@ -2,8 +2,8 @@
 	import Country from '../lib/components/Country.svelte';
 	import NameForm from '../lib/components/NameForm.svelte';
 	import Points from '../lib/components/Points.svelte';
-	import { correctAnswer, country, names } from '../stores';
-	import { fetchCountry } from '../lib/utils';
+	import { country, names } from '../stores';
+	import NextButton from '../lib/components/NextButton.svelte';
 
 	$: countryData = $country;
 </script>
@@ -17,22 +17,17 @@
 		<div class="font-bold text-5xl name">WORLDLE</div>
 		<Points />
 	</div>
-	{#if $correctAnswer || $names.length >= 5}
-		<button
-			on:click={async () => {
-				const newCountry = await fetchCountry();
-				console.log(newCountry);
-				country.set(newCountry);
-				names.set([]);
-				correctAnswer.set(false);
-			}}
-			class="btn btn-primary">NEXT</button
-		>
-	{/if}
+	<div class="hidden xl:block">
+		<NextButton />
+	</div>
 </div>
-<div class="flex flex-col md:flex-row justify-between">
+<div class="flex flex-col xl:flex-row justify-between">
 	<Country country={countryData} />
 	<NameForm country={countryData} />
+</div>
+
+<div class="mt-10 justify-end flex xl:hidden">
+	<NextButton />
 </div>
 
 <style>
