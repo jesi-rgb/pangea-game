@@ -12,7 +12,7 @@
 	<title>WORLDLE</title>
 </head>
 
-<main class="w-fit xl:w-full">
+<main class="w-fit mx-auto xl:w-full">
 	<div class="flex justify-between">
 		<div class="mb-10">
 			<div class="font-bold text-5xl name">WORLDLE</div>
