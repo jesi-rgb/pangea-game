@@ -1,10 +1,10 @@
 <script>
 	import { fly, scale } from 'svelte/transition';
 	import { backInOut, backOut, quintIn, quintInOut, quintOut } from 'svelte/easing';
-	import { correctAnswer, names } from '../../stores.js';
-	export let answer;
+	import { correctAnswer, names, country } from '../../stores.js';
 
-	$: console.log($names[$names.length - 1], answer);
+	$: answer = $country['properties']['name_long'];
+
 	$: if ($names[$names.length - 1] == answer) {
 		$correctAnswer = true;
 	}

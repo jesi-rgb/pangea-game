@@ -1,23 +1,27 @@
 <script>
-	import { names } from '../../stores.js';
+	import { country, names, points } from '../../stores.js';
 	import Answer from './Answer.svelte';
 	import InputNames from './InputNames.svelte';
 
-	export let data;
-	console.log('data', data);
-	const answer = data['properties']['name_long'];
-
 	let userInput;
+	$: answer = $country['properties']['name_long'];
+
 	function enterName(e) {
 		if (e.key === 'Enter') {
 			$names = [...$names, userInput.value];
+
+			if (userInput.value === answer) {
+				console.log('in');
+				points.update((p) => p + 100);
+				console.log($points);
+			}
 			userInput.value = '';
 		}
 	}
 </script>
 
 <div class="w-1/3 self-end flex flex-col justify-between">
-	<Answer {answer} />
+	<Answer />
 
 	<InputNames />
 
