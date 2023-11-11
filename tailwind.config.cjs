@@ -1,5 +1,3 @@
-const { default: daisyui } = require('daisyui');
-
 /** @type {import('tailwindcss').Config}*/
 const config = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -7,7 +5,7 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['AT Name Sans Variable']
+        sans: ['AT Name Sans Variable', 'SF Pro', 'system-ui']
       }
     }
   },
