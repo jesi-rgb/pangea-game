@@ -4,3 +4,5 @@ export const names = writable([]);
 export const correctAnswer = writable(false);
 export const points = writable(0);
 export const country = writable({});
+
+export const countryList = writable([]);

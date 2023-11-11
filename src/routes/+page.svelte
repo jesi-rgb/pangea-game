@@ -12,23 +12,25 @@
 	<title>WORLDLE</title>
 </head>
 
-<div class="flex justify-between">
-	<div class="mb-10">
-		<div class="font-bold text-5xl name">WORLDLE</div>
-		<Points />
+<main class="w-fit xl:w-full">
+	<div class="flex justify-between">
+		<div class="mb-10">
+			<div class="font-bold text-5xl name">WORLDLE</div>
+			<Points />
+		</div>
+		<div class="hidden xl:block">
+			<NextButton />
+		</div>
 	</div>
-	<div class="hidden xl:block">
+	<div class="flex flex-col xl:flex-row justify-between">
+		<Country country={countryData} />
+		<NameForm country={countryData} />
+	</div>
+
+	<div class="mt-10 justify-end flex xl:hidden">
 		<NextButton />
 	</div>
-</div>
-<div class="flex flex-col xl:flex-row justify-between">
-	<Country country={countryData} />
-	<NameForm country={countryData} />
-</div>
-
-<div class="mt-10 justify-end flex xl:hidden">
-	<NextButton />
-</div>
+</main>
 
 <style>
 	.name {

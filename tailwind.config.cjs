@@ -13,7 +13,7 @@ const config = {
   plugins: [require('daisyui')],
 
   daisyui: {
-    themes: ['light', 'dark', 'cmyk']
+    themes: ['fantasy']
   }
 };
 

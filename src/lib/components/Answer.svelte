@@ -10,7 +10,7 @@
 	}
 </script>
 
-<div class="mt-10">
+<div class="my-10">
 	{#if $correctAnswer}
 		<div class="flex justify-between">
 			<h1 class="text-3xl font-bold">{answer}</h1>
