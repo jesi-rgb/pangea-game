@@ -15,7 +15,7 @@ const config = {
   plugins: [require('daisyui')],
 
   daisyui: {
-    themes: ['corporate', 'dracula', 'cmyk']
+    themes: ['light', 'dark', 'cmyk']
   }
 };
 

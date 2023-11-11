@@ -25,10 +25,11 @@
 		<p class="opacity-70">Enter a country name</p>
 		<div class="w-1/3">
 			<input
+				disabled={$names.length >= 5}
 				on:keydown={enterName}
 				bind:this={userInput}
 				type="text"
-				class="input input-bordered input-primary"
+				class="input input-bordered input-accent"
 			/>
 		</div>
 	</div>

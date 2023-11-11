@@ -1,6 +1,6 @@
 <script>
 	import { fly, scale } from 'svelte/transition';
-	import { backInOut, backOut } from 'svelte/easing';
+	import { backInOut, backOut, quintIn, quintInOut, quintOut } from 'svelte/easing';
 	import { correctAnswer, names } from '../../stores.js';
 	export let answer;
 
@@ -28,9 +28,33 @@
 			/></svg
 		>
 	</div>
+{:else if $names.length >= 5}
+	<div class="flex justify-between">
+		<h1
+			in:fly={{ x: -50, duration: 1000, delay: 300, easing: quintOut }}
+			class="text-3xl font-bold"
+		>
+			{answer}
+		</h1>
+		<svg
+			in:scale={{ duration: 300, easing: backInOut }}
+			xmlns="http://www.w3.org/2000/svg"
+			width="36"
+			height="36"
+			class="fill-error"
+			viewBox="0 0 256 256"
+			><path
+				d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"
+			/></svg
+		>
+	</div>
 {:else if $names.length > 0}
 	<div class="flex justify-between">
-		<h1 class="text-3xl font-bold">{$names[$names.length - 1]}</h1>
+		{#key $names}
+			<h1 in:fly={{ x: -20, duration: 200, easing: backOut }} class="text-3xl font-bold">
+				{$names[$names.length - 1]}
+			</h1>
+		{/key}
 		<svg
 			in:scale={{ duration: 300, easing: backInOut }}
 			xmlns="http://www.w3.org/2000/svg"

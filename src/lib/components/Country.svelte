@@ -11,7 +11,7 @@
 </script>
 
 <div
-	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-2 border-dashed border-accent p-1 rounded-xl shadow-xl shadow-black/20"
+	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-2 border-dashed border-accent p-1 rounded-xl shadow-xl shadow-black/10 dark:shadow-accent/5"
 >
 	{#if geoObject}
 		<BaseMap>
