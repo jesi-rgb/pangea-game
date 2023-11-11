@@ -1,25 +1,31 @@
 <script>
 	import { BaseMap, FeatureLayer } from 'svelte-geo';
-	import world from '/src/world.geojson.json';
 
-	console.log(world);
-	let randomCountry = world.features[parseInt(Math.random() * world.features.length)];
+	export let data;
+	const randomCountry = data;
 
-	$: geoObject = { type: 'FeatureCollection', features: [randomCountry] };
-
-	$: console.log(geoObject);
-
-	console.log(randomCountry);
+	let geoObject;
+	$: if (randomCountry) {
+		geoObject = { type: 'FeatureCollection', features: [randomCountry] };
+	}
 </script>
 
-<div class="h-[500px] w-[400px] md:w-[600px] mx-auto border-2 border-dashed p-1 rounded-xl">
-	<BaseMap background={'#1D232A'}>
-		<FeatureLayer
-			geojson={geoObject}
-			styleAccessor={(feature) => ({
-				fill: '#EEE',
-				'vector-effect': 'non-scaling-stroke'
-			})}
-		/>
-	</BaseMap>
+<div
+	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] mx-auto border-2 border-dashed p-1 rounded-xl"
+>
+	{#if geoObject}
+		<BaseMap background={'#1D232A'}>
+			<FeatureLayer
+				geojson={geoObject}
+				styleAccessor={(feature) => ({
+					fill: '#EEE',
+					'vector-effect': 'non-scaling-stroke'
+				})}
+			/>
+		</BaseMap>
+	{/if}
+</div>
+
+<div class="mx-auto w-fit text-3xl">
+	{data['properties']['pop_est'].toLocaleString()}
 </div>
