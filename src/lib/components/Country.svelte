@@ -11,21 +11,20 @@
 </script>
 
 <div
-	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] mx-auto border-2 border-dashed p-1 rounded-xl"
+	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-2 border-dashed border-accent p-1 rounded-xl shadow-xl shadow-black/20"
 >
 	{#if geoObject}
-		<BaseMap background={'#1D232A'}>
+		<BaseMap>
 			<FeatureLayer
 				geojson={geoObject}
 				styleAccessor={(feature) => ({
-					fill: '#EEE',
+					class: 'fill-base-content ',
 					'vector-effect': 'non-scaling-stroke'
 				})}
 			/>
 		</BaseMap>
 	{/if}
-</div>
-
-<div class="mx-auto w-fit text-3xl">
-	{data['properties']['pop_est'].toLocaleString()}
+	<div class="text-3xl mt-10 tabular-nums">
+		Population estimate: {data['properties']['pop_est'].toLocaleString()}
+	</div>
 </div>
