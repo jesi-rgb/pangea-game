@@ -19,8 +19,6 @@ export function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
   lon1 = parseFloat(lon1);
   lon2 = parseFloat(lon2);
 
-  console.log(lat1, lat2);
-
   let earthRadiusKm = 6371;
 
   let dLat = toRadians(lat2 - lat1);
@@ -33,7 +31,6 @@ export function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  console.log(dLat);
   return earthRadiusKm * c;
 }
 
@@ -48,8 +45,9 @@ export function bearing(startLat, startLng, destLat, destLng) {
   let x =
     Math.cos(startLat) * Math.sin(destLat) -
     Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
+
   let brng = Math.atan2(y, x);
 
   brng = toDegrees(brng);
-  return (brng + 360) % 360;
+  return -90 + ((brng + 180) % 360);
 }
