@@ -58,7 +58,7 @@
 			{:else}
 				<section class="mb-5 flex justify-between tabular-nums">
 					<div class="flex items-center space-x-3">
-						<div class="font-bold" style="transform:rotate({distance.angle}deg)">--></div>
+						<div class="font-bold" style="transform:rotate({distance.angle}deg)">→</div>
 						<div>{distance.ratio.toFixed(2)}%</div>
 					</div>
 					<div>{distance.distance.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
