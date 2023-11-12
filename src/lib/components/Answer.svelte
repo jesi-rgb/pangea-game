@@ -13,7 +13,7 @@
 <div class="my-10">
 	{#if $correctAnswer}
 		<div class="flex justify-between">
-			<h1 class="text-3xl font-bold">{answer}</h1>
+			<h1 class="text-3xl font-bold text-primary">{answer}</h1>
 			<svg
 				in:scale={{ duration: 300, easing: backInOut }}
 				xmlns="http://www.w3.org/2000/svg"
@@ -31,12 +31,17 @@
 		</div>
 	{:else if $names.length >= 5}
 		<div class="flex justify-between">
-			<h1
-				in:fly={{ x: -50, duration: 1000, delay: 300, easing: quintOut }}
-				class="text-3xl font-bold"
+			<a
+				href="https://www.google.com/maps?q={$country.properties.name_long}+{$country.properties
+					.adm0_a3}"
 			>
-				{answer}
-			</h1>
+				<h1
+					in:fly={{ x: -50, duration: 1000, delay: 300, easing: quintOut }}
+					class="text-3xl font-bold text-error"
+				>
+					{answer}
+				</h1>
+			</a>
 			<svg
 				in:scale={{ duration: 300, easing: backInOut }}
 				xmlns="http://www.w3.org/2000/svg"

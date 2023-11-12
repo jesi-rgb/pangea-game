@@ -1,6 +1,6 @@
 <script>
 	import Select from 'svelte-select';
-	import { country, countryList, names, points } from '../../stores';
+	import { country, countryList, names, points, correctAnswer } from '../../stores';
 
 	$: answer = $country['properties']['name_long'];
 
@@ -22,10 +22,16 @@
 </script>
 
 <Select
-	disabled={$names.length >= 5 ? true : false}
+	disabled={$names.length >= 5 || $correctAnswer}
 	items={$countryList}
-	class="text-base-content fill-black bg-black"
+	class="text-base-content fill-black bg-black combobox"
 	on:select={enterName}
 	placeholder="Enter a country name to search"
 	bind:value
 />
+
+<style lang="postcss">
+	.combobox  {
+		@apply bg-black;
+	}
+</style>
