@@ -3,5 +3,5 @@
 </script>
 
 <div class="tabular-nums font-bold text-2xl mt-3 xl:mt-5">
-	{$points} points
+	{$points} <span class="opacity-60">points</span>
 </div>

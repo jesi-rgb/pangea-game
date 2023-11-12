@@ -1,0 +1,10 @@
+@font-face {
+	font-family: 'Recursive';
+	src: local('Recursive'), url('/fonts/Recursive.ttf');
+	font-weight: 300 1000;
+}
+
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

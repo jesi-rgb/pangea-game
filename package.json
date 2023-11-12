@@ -19,6 +19,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte": "^2.30.0",
     "geojson2svg": "^2.0.1",
+    "normalize-diacritics": "^4.0.3",
     "postcss": "^8.4.24",
     "postcss-load-config": "^4.0.1",
     "prettier": "^2.8.0",

@@ -2,6 +2,7 @@
 	import { fly, scale } from 'svelte/transition';
 	import { backInOut, backOut, quintIn, quintInOut, quintOut } from 'svelte/easing';
 	import { correctAnswer, names, country } from '../../stores.js';
+	import NumTries from './NumTries.svelte';
 
 	$: answer = $country['properties']['name_long'];
 
@@ -10,7 +11,7 @@
 	}
 </script>
 
-<div class="my-10">
+<div class="mt-10 mb-5">
 	{#if $correctAnswer}
 		<div class="flex justify-between">
 			<h1 class="text-3xl font-bold text-primary">{answer}</h1>
@@ -61,6 +62,7 @@
 					{$names[$names.length - 1]}
 				</h1>
 			{/key}
+
 			<svg
 				in:scale={{ duration: 300, easing: backInOut }}
 				xmlns="http://www.w3.org/2000/svg"
@@ -73,5 +75,7 @@
 				/></svg
 			>
 		</div>
+	{:else}
+		<div class="opacity-0 text-3xl">YEA</div>
 	{/if}
 </div>

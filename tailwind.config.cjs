@@ -5,7 +5,15 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['AT Name Sans Variable', 'SF Pro', 'system-ui']
+        sans: [
+          'AT Name Sans Variable',
+          'Gill Sans',
+          'Gotham',
+          'Century Gothic',
+          'SF Pro',
+          'system-ui'
+        ],
+        mono: ['Recursive']
       }
     }
   },

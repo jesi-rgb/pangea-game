@@ -1,8 +1,8 @@
 <script>
 	import { BaseMap, FeatureLayer } from 'svelte-geo';
+	import { loadingCountry } from '../../stores';
 
 	export let country;
-	console.log(country['properties']);
 
 	let geoObject;
 	$: if (country) {
@@ -11,14 +11,14 @@
 </script>
 
 <div
-	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-black/10 dark:shadow-accent/5"
+	class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-primary/5"
 >
 	{#key geoObject}
 		<BaseMap>
 			<FeatureLayer
 				geojson={geoObject}
 				styleAccessor={(feature) => ({
-					class: 'fill-base-content ',
+					class: 'fill-base-content',
 					'vector-effect': 'non-scaling-stroke'
 				})}
 			/>
