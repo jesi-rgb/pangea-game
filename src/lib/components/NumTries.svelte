@@ -2,6 +2,9 @@
 	import { names } from '../../stores.js';
 </script>
 
-<div class="diagonal-fractions font-mono text-3xl font-bold">
+<div
+	class="diagonal-fractions font-mono text-3xl text-primary"
+	style="font-weight:{200 + ($names.length / 5) * 1000}"
+>
 	<sup>{$names.length}</sup>⁄<sub>5</sub>
 </div>

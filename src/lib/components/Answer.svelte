@@ -1,8 +1,7 @@
 <script>
 	import { fly, scale } from 'svelte/transition';
-	import { backInOut, backOut, quintIn, quintInOut, quintOut } from 'svelte/easing';
+	import { backInOut, backOut, quintOut } from 'svelte/easing';
 	import { correctAnswer, names, country } from '../../stores.js';
-	import NumTries from './NumTries.svelte';
 
 	$: answer = $country['properties']['name_long'];
 

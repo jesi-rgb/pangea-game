@@ -12,7 +12,20 @@
 			$names = [...$names, value.value];
 
 			if (value.value === answer) {
-				points.update((p) => p + 100);
+				switch ($names.length) {
+					case 1:
+						points.update((p) => p + 500);
+						break;
+					case 2:
+						points.update((p) => p + 300);
+						break;
+					case 3:
+						points.update((p) => p + 200);
+						break;
+					default:
+						points.update((p) => p + 100);
+						break;
+				}
 			}
 		}
 		value.value = '';

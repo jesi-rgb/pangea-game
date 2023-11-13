@@ -1,16 +1,18 @@
 <script>
-	import { country, correctAnswer, names, points } from '../../stores.js';
+	import { correctAnswer, names, points } from '../../stores.js';
 	import Answer from './Answer.svelte';
 	import CountryTrivia from './CountryTrivia.svelte';
 	import Distance from './Distance.svelte';
 	import InputNames from './InputNames.svelte';
 	import NumTries from './NumTries.svelte';
+	import Points from './Points.svelte';
 	import Selection from './Selection.svelte';
 
-	let userInput;
-	$: answer = $country['properties']['name_long'];
-
 	$: finishRound = $names.length >= 5 || $correctAnswer;
+
+	$: if (finishRound && !$correctAnswer) {
+		points.update((p) => p - 50);
+	}
 </script>
 
 <div class="xl:self-end flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]">
