@@ -26,6 +26,16 @@
 	title="PANGEA - The country guessing game"
 	description="Guess the country based on its shape"
 	canonical="https://pangea-game.vercel.app"
+	keywords={[
+		'worldle',
+		'country',
+		'guess',
+		'game',
+		'guessing game',
+		'country guessing game',
+		'pangea',
+		'pangea game'
+	]}
 	openGraph={{
 		url: 'https://pangea-game.vercel.app',
 		title: 'PANGEA',
