@@ -1,5 +1,5 @@
 <script>
-	import { correctAnswer, country, names } from '../../stores';
+	import { correctAnswer, country, names, distances } from '../../stores';
 	import { normalize } from 'normalize-diacritics';
 	import { distanceInKmBetweenEarthCoordinates, bearing } from '../utils';
 
@@ -12,7 +12,6 @@
 		}
 		const normalizedCountry = await normalize(lastCountry.replaceAll(' ', '').replaceAll("'", ''));
 
-		console.log(`https://country-api-omega.vercel.app/info/${normalizedCountry}`);
 		const promise = await fetch(`https://country-api-omega.vercel.app/info/${normalizedCountry}`);
 		const info = await promise.json();
 
@@ -30,8 +29,6 @@
 		);
 		const antipodalDistance = 20000;
 
-		console.log(distance);
-
 		const angle = bearing(countryLat, countryLon, guessLat, guessLon);
 
 		const distanceData = {
@@ -39,7 +36,8 @@
 			ratio: (1 - distance / antipodalDistance) * 100,
 			angle: angle
 		};
-		console.log(angle);
+
+		$distances = [...$distances, distanceData.ratio.toFixed(2) + '%'];
 		return distanceData;
 	}
 </script>
@@ -52,17 +50,23 @@
 			</section>
 		{:then distance}
 			{#if distance == undefined}
+				<!--this prevents layout shift-->
 				<section class="mb-5 opacity-0">
 					<div>a</div>
 				</section>
 			{:else}
-				<section class="mb-5 flex justify-between tabular-nums">
-					<div class="flex items-center space-x-3">
-						<div class="font-bold" style="transform:rotate({distance.angle}deg)">→</div>
-						<div>{distance.ratio.toFixed(2)}%</div>
-					</div>
-					<div>{distance.distance.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
-				</section>
+				<div class="mb-5">
+					<section class="flex justify-between tabular-nums">
+						<div class="flex items-center space-x-3 font-semibold">
+							<div style="transform:rotate({distance.angle}deg)">→</div>
+							<div style="font-weight:{distance.ratio * 10}">
+								{distance.ratio.toFixed(2)}%
+							</div>
+						</div>
+						<div>{distance.distance.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
+					</section>
+					<progress class="progress w-full progress-primary" value={distance.ratio} max="100" />
+				</div>
 			{/if}
 		{/await}
 	{/if}

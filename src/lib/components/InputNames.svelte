@@ -1,9 +1,12 @@
 <script>
-	import { names } from '../../stores.js';
+	import { names, distances } from '../../stores.js';
 </script>
 
 <ol class="hidden xl:block h-1/3 list-decimal tabular-nums my-10">
-	{#each $names as name}
-		<li class="list-item">{name}</li>
+	{#each $names as name, i}
+		<li class=" flex justify-between w-full">
+			<span class="">{name}</span>
+			<span class="">{$distances[i]}</span>
+		</li>
 	{/each}
 </ol>

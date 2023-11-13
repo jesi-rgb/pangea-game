@@ -4,6 +4,13 @@
 	font-weight: 300 1000;
 }
 
+@font-face {
+	font-family: 'AT Name Sans';
+	src: local('AT Name Sans'),
+		url('https://jesi-rgb-fonts.s3.eu-west-3.amazonaws.com/AT-NameSansVariable.ttf');
+	font-weight: 300 1000;
+}
+
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
