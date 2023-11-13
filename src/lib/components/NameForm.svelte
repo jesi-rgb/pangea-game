@@ -5,13 +5,12 @@
 	import Distance from './Distance.svelte';
 	import InputNames from './InputNames.svelte';
 	import NumTries from './NumTries.svelte';
-	import Points from './Points.svelte';
 	import Selection from './Selection.svelte';
 
 	$: finishRound = $names.length >= 5 || $correctAnswer;
 
 	$: if (finishRound && !$correctAnswer) {
-		points.update((p) => p - 50);
+		points.update((p) => Math.max(0, p - 50));
 	}
 </script>
 
