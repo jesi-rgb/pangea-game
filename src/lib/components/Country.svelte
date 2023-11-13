@@ -1,6 +1,5 @@
 <script>
 	import { BaseMap, FeatureLayer } from 'svelte-geo';
-	import { loadingCountry } from '../../stores';
 
 	export let country;
 
