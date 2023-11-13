@@ -6,6 +6,8 @@
 	import NextButton from '../lib/components/NextButton.svelte';
 	import logo from '$lib/pangea.svg';
 
+	import { MetaTags } from 'svelte-meta-tags';
+
 	$: countryData = $country;
 </script>
 
@@ -19,6 +21,33 @@
 	<meta name="msapplication-TileColor" content="#da532c" />
 	<meta name="theme-color" content="#ffffff" />
 </head>
+
+<MetaTags
+	title="PANGEA - The country guessing game"
+	description="Guess the country based on its shape"
+	canonical="https://pangea-game.vercel.app"
+	openGraph={{
+		url: 'https://pangea-game.vercel.app',
+		title: 'PANGEA',
+		description: 'The country guessing game',
+		images: [
+			{
+				url: 'https://pangea-game.vercel.app/thumb.png',
+				width: 1200,
+				height: 600,
+				alt: 'PANGEA'
+			}
+		]
+	}}
+	twitter={{
+		handle: '@jesi-rgb',
+		cardType: 'summary_large_image',
+		title: 'PANGEA',
+		description: 'The country guessing game',
+		image: 'https://pangea-game.vercel.app/thumb.png',
+		imageAlt: 'PANGEA'
+	}}
+/>
 
 <main class="w-fit mx-auto xl:w-full">
 	<div class="flex justify-between">
