@@ -7,7 +7,7 @@ export async function load({ fetch, params }) {
 
   const countryListPromise = await fetch('https://country-api-omega.vercel.app/country_names');
   const newCountryList = await countryListPromise.json();
-  countryList.set(newCountryList);
+  countryList.set(newCountryList.sort());
 
   loadingCountry.set(false);
 }
