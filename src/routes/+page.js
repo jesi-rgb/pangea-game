@@ -9,5 +9,6 @@ export async function load({ fetch, params }) {
   const newCountryList = await countryListPromise.json();
   countryList.set(newCountryList.sort());
 
+  //yea
   loadingCountry.set(false);
 }
