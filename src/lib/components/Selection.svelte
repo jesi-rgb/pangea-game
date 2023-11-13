@@ -4,6 +4,8 @@
 
 	$: answer = $country['properties']['name_long'];
 
+	$: choices = $countryList.filter((x) => !$names.includes(x));
+
 	let value;
 	function enterName(e) {
 		if (value) {
@@ -21,10 +23,15 @@
 <div class="w-10/12">
 	<Select
 		disabled={$names.length >= 5 || $correctAnswer}
-		items={$countryList}
-		class="text-base-content "
+		items={choices}
 		on:select={enterName}
 		placeholder="Enter a country name to search"
 		bind:value
 	/>
 </div>
+
+<style>
+	:global(.selection) {
+		border: #6d0076;
+	}
+</style>

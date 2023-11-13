@@ -46,7 +46,9 @@
 	{#if !finishRound}
 		{#await calculateDistance(lastCountry)}
 			<section class="mb-5">
-				<div>Loading...</div>
+				<div class="flex space-x-3 items-center">
+					<span class="loading loading-bars loading-xs" /><span>Loading</span>
+				</div>
 			</section>
 		{:then distance}
 			{#if distance == undefined}

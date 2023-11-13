@@ -61,8 +61,8 @@
 
 <main class="w-fit mx-auto xl:w-full">
 	<div class="flex justify-between">
-		<div class="mb-10 mx-auto xl:mx-0">
-			<div class="font-bold text-5xl name"><img src={logo} width="200" alt="PANGEA logo" /></div>
+		<div class="mb-3 mx-auto xl:mx-0">
+			<img src={logo} width="200" alt="PANGEA logo" />
 			<Points />
 		</div>
 		<div class="hidden xl:block">
