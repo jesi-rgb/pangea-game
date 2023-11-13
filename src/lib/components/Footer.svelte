@@ -11,5 +11,10 @@
 		Typeset in
 		<a href="https://www.arrowtype.com/name-sans" class="font-semibold underline">Name Sans</a>
 		and <a href="https://recursive.design" class="font-mono underline font-semibold">Recursive</a>.
+		Logo in
+		<a
+			class="font-semibold underline"
+			href="https://djr.com/notes/megazoid-italic-font-of-the-month">Megazoid Italic</a
+		>.
 	</p>
 </footer>
