@@ -7,6 +7,7 @@
 	import logo from '$lib/pangea.svg';
 
 	import { MetaTags } from 'svelte-meta-tags';
+	import Footer from '../lib/components/Footer.svelte';
 
 	$: countryData = $country;
 </script>
@@ -73,11 +74,5 @@
 	<div class="mt-10 justify-end flex xl:hidden">
 		<NextButton />
 	</div>
+	<Footer />
 </main>
-
-<style>
-	.name {
-		font-feature-settings: 'ss03';
-		font-variation-settings: 'opsz' 72, 'ital' 0.8, 'wght' 969;
-	}
-</style>
