@@ -44,6 +44,7 @@
 			</a>
 			<svg
 				in:scale={{ duration: 300, easing: backInOut }}
+				out:fly={{ x: 20, duration: 100, easing: backOut }}
 				xmlns="http://www.w3.org/2000/svg"
 				width="36"
 				height="36"
@@ -57,7 +58,11 @@
 	{:else if $names.length > 0}
 		<div class="flex justify-between">
 			{#key $names}
-				<h1 in:fly={{ x: -20, duration: 200, easing: backOut }} class="text-3xl font-bold">
+				<h1
+					out:fly={{ x: 20, duration: 100, easing: backOut }}
+					in:fly={{ x: -20, duration: 200, easing: backOut }}
+					class="text-3xl font-bold"
+				>
 					{$names[$names.length - 1]}
 				</h1>
 			{/key}

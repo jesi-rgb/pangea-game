@@ -1,12 +1,14 @@
 <script>
 	import Select from 'svelte-select';
 	import { country, countryList, names, points, correctAnswer } from '../../stores';
+	import { onMount } from 'svelte';
 
 	$: answer = $country['properties']['name_long'];
 
 	$: choices = $countryList.filter((x) => !$names.includes(x));
 
-	let value;
+	let value,
+		focused = true;
 	function enterName(e) {
 		if (value) {
 			$names = [...$names, value.value];
@@ -40,6 +42,7 @@
 		on:select={enterName}
 		placeholder="Enter a country name to search"
 		bind:value
+		bind:focused
 	/>
 </div>
 
