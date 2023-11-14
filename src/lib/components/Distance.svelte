@@ -42,12 +42,11 @@
 	}
 </script>
 
-<div class="text-xl">
+<div class="text-xl mt-4">
 	{#await calculateDistance(lastCountry)}
 		<div class="mb-5">
 			<section class="flex justify-between tabular-nums">
 				<div class="flex items-center space-x-3 font-semibold">
-					<div style="">→</div>
 					<div class="flex space-x-3 items-center">
 						<span class="loading loading-bars loading-xs" /><span>Loading</span>
 					</div>

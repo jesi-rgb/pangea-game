@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 
+export const rounds = writable(1);
 export const names = writable([]);
 export const distances = writable([]);
 export const correctAnswer = writable(false);

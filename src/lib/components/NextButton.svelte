@@ -1,5 +1,5 @@
 <script>
-	import { loadingCountry, correctAnswer, country, names, distances } from '../../stores';
+	import { loadingCountry, correctAnswer, country, names, distances, rounds } from '../../stores';
 	import { fetchCountry } from '../utils';
 
 	let button;
@@ -13,6 +13,7 @@
 		correctAnswer.set(false);
 		loadingCountry.set(true);
 		distances.set([]);
+		rounds.update((r) => r + 1);
 
 		const newCountry = await fetchCountry();
 		country.set(newCountry);
