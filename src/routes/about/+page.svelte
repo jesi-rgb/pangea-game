@@ -1,20 +1,33 @@
-<div class="max-w-xl mx-auto flex flex-col space-y-5">
-	<p>
-		Crafted with care by <a href="https://jesirgb.com" class="font-semibold underline"
+<div
+	class="list-disc max-w-xs xl:max-w-xl my-20 xl:my-[25%] text-lg mx-auto flex flex-col space-y-5"
+>
+	<li>
+		Crafted with care by <a href="https://jesirgb.com" class="font-semibold underline text-primary"
 			>Jesús Rascón</a
 		>.
-	</p>
-	<p><a href="https://geojson-maps.ash.ms/" class="underline font-semibold">Data source</a>.</p>
-	<p>
+	</li>
+	<li>
+		<a href="https://geojson-maps.ash.ms/" class="underline font-semibold text-primary"
+			>Data source</a
+		>.
+	</li>
+	<li>
 		Typeset in
-		<a href="https://www.arrowtype.com/name-sans" class="font-semibold underline">Name Sans</a>
-		and <a href="https://recursive.design" class="font-mono underline font-semibold">Recursive</a>.
+		<a href="https://www.arrowtype.com/name-sans" class="font-semibold underline text-primary"
+			>Name Sans</a
+		>
+		and
+		<a href="https://recursive.design" class="font-mono underline font-semibold text-primary"
+			>Recursive</a
+		>.
+	</li>
+	<li>
 		Logo in
 		<a
-			class="font-semibold underline"
+			class="font-semibold underline text-primary"
 			href="https://djr.com/notes/megazoid-italic-font-of-the-month">Megazoid Italic</a
 		>.
-	</p>
+	</li>
 
-	<a href="/" class="btn btn-outline w-fit">Back</a>
+	<a href="/" class="btn btn-outline w-fit self-end">Back</a>
 </div>
