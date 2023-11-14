@@ -60,7 +60,7 @@
 				<div class="mb-5">
 					<section class="flex justify-between tabular-nums">
 						<div class="flex items-center space-x-3 font-semibold">
-							<div style="transform:rotate({distance.angle}deg)">→</div>
+							<div style="transform:rotate({distance.angle}deg);">→</div>
 							<div style="font-weight:{distance.ratio * 10}; font-variation-settings: 'opsz' 12;">
 								{distance.ratio.toFixed(2)}%
 							</div>
