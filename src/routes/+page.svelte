@@ -2,7 +2,7 @@
 	import Country from '../lib/components/Country.svelte';
 	import NameForm from '../lib/components/NameForm.svelte';
 	import Points from '../lib/components/Points.svelte';
-	import { country } from '../stores';
+	import { country, correctAnswer } from '../stores';
 	import NextButton from '../lib/components/NextButton.svelte';
 	import logo from '$lib/pangea.svg';
 

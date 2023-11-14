@@ -43,14 +43,14 @@
 </script>
 
 <div class="text-xl">
-	{#if !finishRound}
-		{#await calculateDistance(lastCountry)}
-			<section class="mb-5">
-				<div class="flex space-x-3 items-center">
-					<span class="loading loading-bars loading-xs" /><span>Loading</span>
-				</div>
-			</section>
-		{:then distance}
+	{#await calculateDistance(lastCountry)}
+		<section class="mb-5">
+			<div class="flex space-x-3 items-center">
+				<span class="loading loading-bars loading-xs" /><span>Loading</span>
+			</div>
+		</section>
+	{:then distance}
+		{#if !finishRound}
 			{#if distance == undefined}
 				<!--this prevents layout shift-->
 				<section class="mb-5 opacity-0">
@@ -70,6 +70,6 @@
 					<progress class="progress w-full progress-primary" value={distance.ratio} max="100" />
 				</div>
 			{/if}
-		{/await}
-	{/if}
+		{/if}
+	{/await}
 </div>

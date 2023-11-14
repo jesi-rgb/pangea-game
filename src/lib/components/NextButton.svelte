@@ -1,5 +1,5 @@
 <script>
-	import { loadingCountry, correctAnswer, country, names } from '../../stores';
+	import { loadingCountry, correctAnswer, country, names, distances } from '../../stores';
 	import { fetchCountry } from '../utils';
 
 	let button;
@@ -16,6 +16,7 @@
 			names.set([]);
 			correctAnswer.set(false);
 			loadingCountry.set(true);
+			distances.set([]);
 		}}
 		bind:this={button}
 		class="btn btn-primary">NEXT</button
