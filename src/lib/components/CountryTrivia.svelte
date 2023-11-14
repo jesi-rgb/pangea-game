@@ -45,7 +45,7 @@
 			View on Google Maps
 		</div>
 		<a
-			class="underline text-primary font-bold"
+			class="underline text-primary text-right font-bold"
 			target="_blank"
 			href="https://www.google.com/maps?q={$country.properties.name_long}+{$country.properties
 				.adm0_a3}"><span>{$country.properties.name}</span></a

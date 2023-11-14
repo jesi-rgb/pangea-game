@@ -13,7 +13,12 @@
 <div class="mt-5 md:mt-10 mb-5">
 	{#if $correctAnswer}
 		<div class="flex justify-between">
-			<h1 class="text-3xl font-bold text-primary">{answer}</h1>
+			<h1
+				in:fly={{ x: -50, duration: 500, delay: 200, easing: quintOut }}
+				class="text-3xl font-bold text-primary"
+			>
+				{answer}
+			</h1>
 			<svg
 				in:scale={{ duration: 300, easing: backInOut }}
 				xmlns="http://www.w3.org/2000/svg"
@@ -58,11 +63,7 @@
 	{:else if $names.length > 0}
 		<div class="flex justify-between">
 			{#key $names}
-				<h1
-					out:fly={{ x: 20, duration: 100, easing: backOut }}
-					in:fly={{ x: -20, duration: 200, easing: backOut }}
-					class="text-3xl font-bold"
-				>
+				<h1 in:fly={{ x: -20, duration: 300, easing: quintOut }} class="text-3xl font-bold">
 					{$names[$names.length - 1]}
 				</h1>
 			{/key}

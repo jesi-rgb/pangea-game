@@ -17,7 +17,7 @@
 			<FeatureLayer
 				geojson={geoObject}
 				styleAccessor={(feature) => ({
-					class: 'fill-base-content',
+					class: 'fill-primary-content stroke-primary stroke-2',
 					'vector-effect': 'non-scaling-stroke'
 				})}
 			/>

@@ -24,7 +24,7 @@
 {/if}
 
 <svelte:window
-	on:keydown={() => {
-		if (finishRound) handleNextRound();
+	on:keydown={(e) => {
+		if (finishRound && e.key === 'Enter') handleNextRound();
 	}}
 />

@@ -14,10 +14,9 @@
 	}
 </script>
 
-<div class="xl:self-end flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]">
-	<Answer />
-	<Distance />
-
+<div
+	class="xl:self-end flex flex-col-reverse xl:flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]"
+>
 	<InputNames />
 
 	{#if finishRound}
@@ -28,4 +27,9 @@
 			<Selection />
 		</div>
 	{/if}
+
+	<div>
+		<Answer />
+		<Distance />
+	</div>
 </div>
