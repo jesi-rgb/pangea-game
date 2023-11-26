@@ -59,7 +59,7 @@
 <main class="w-fit mx-auto xl:w-full">
 	<div class="flex justify-between">
 		<div class="mb-3 mx-auto xl:mx-0">
-			<img src={logo} width="200" alt="PANGEA logo" />
+			<img src={logo} width="200" class="mx-auto" alt="PANGEA logo" />
 			<Points />
 		</div>
 		<div class="hidden xl:block">
@@ -67,7 +67,11 @@
 		</div>
 	</div>
 	<div class="flex flex-col xl:flex-row justify-between">
-		<Country country={countryData} />
+		{#if countryData}
+			<Country country={countryData} />
+		{:else}
+			<div>loading</div>
+		{/if}
 		<NameForm />
 	</div>
 

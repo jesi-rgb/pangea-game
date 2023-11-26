@@ -36,17 +36,12 @@
 		</div>
 	{:else if $names.length >= 5}
 		<div class="flex justify-between">
-			<a
-				href="https://www.google.com/maps?q={$country.properties.name_long}+{$country.properties
-					.adm0_a3}"
+			<h1
+				in:fly={{ x: -50, duration: 1000, delay: 300, easing: quintOut }}
+				class="text-3xl font-bold text-error"
 			>
-				<h1
-					in:fly={{ x: -50, duration: 1000, delay: 300, easing: quintOut }}
-					class="text-3xl font-bold text-error"
-				>
-					{answer}
-				</h1>
-			</a>
+				{answer}
+			</h1>
 			<svg
 				in:scale={{ duration: 300, easing: backInOut }}
 				out:fly={{ x: 20, duration: 100, easing: backOut }}

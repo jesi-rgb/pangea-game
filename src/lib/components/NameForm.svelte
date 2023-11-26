@@ -18,11 +18,11 @@
 	<InputNames />
 
 	<Answer />
-	<Distance />
 
 	{#if finishRound}
 		<CountryTrivia />
 	{:else}
+		<Distance />
 		<div class="flex items-center justify-between xl:flex-row-reverse">
 			<NumTries />
 			<Selection />
