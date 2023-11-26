@@ -3,7 +3,6 @@
 	import { backInOut, backOut, quintOut } from 'svelte/easing';
 	import { correctAnswer, names, country } from '../../stores.js';
 
-	$: console.log($country['properties']['name_long']);
 	$: answer = $country['properties']['name_long'];
 
 	$: if ($names[$names.length - 1] == answer) {
