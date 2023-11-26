@@ -3,11 +3,9 @@
 
 	export let country;
 
-	let geoObject = {};
+	let geoObject = undefined;
 	$: if (country) {
 		geoObject = { type: 'FeatureCollection', features: [country] };
-	} else {
-		geoObject = {};
 	}
 </script>
 
@@ -20,13 +18,18 @@
 				<FeatureLayer
 					geojson={geoObject}
 					styleAccessor={(feature) => ({
-						class: 'fill-primary-content stroke-primary stroke-2',
+						class:
+							'fill-primary-content stroke-primary stroke-2 drop-shadow-[0_2px_1px_rgba(109,0,117,0.15)]',
+
 						'vector-effect': 'non-scaling-stroke'
 					})}
 				/>
 			</BaseMap>
 		{/key}
 	{:else}
-		<div>loading</div>
+		<div class="flex space-x-3 mx-auto text-center w-min align-middle h-min my-[150px]">
+			<span class="loading loading-bars loading-lg" />
+			<div class="text-5xl font-bold">Loading...</div>
+		</div>
 	{/if}
 </div>

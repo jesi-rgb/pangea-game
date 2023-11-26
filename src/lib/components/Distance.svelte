@@ -44,17 +44,19 @@
 
 <div class="text-xl mt-4">
 	{#await calculateDistance(lastCountry)}
-		<div class="mb-5">
-			<section class="flex justify-between tabular-nums">
-				<div class="flex items-center space-x-3 font-semibold">
-					<div class="flex space-x-3 items-center">
-						<span class="loading loading-bars loading-xs" /><span>Loading</span>
+		{#if !finishRound}
+			<div class="mb-5">
+				<section class="flex justify-between tabular-nums">
+					<div class="flex items-center space-x-3 font-semibold">
+						<div class="flex space-x-3 items-center">
+							<span class="loading loading-bars loading-xs" /><span>Loading</span>
+						</div>
 					</div>
-				</div>
-				<div>{'10'.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
-			</section>
-			<progress class="progress w-full progress-primary" value="0" max="100" />
-		</div>
+					<div>{'10'.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
+				</section>
+				<progress class="progress w-full progress-primary" value="0" max="100" />
+			</div>
+		{/if}
 	{:then distance}
 		{#if !finishRound}
 			{#if distance == undefined}
