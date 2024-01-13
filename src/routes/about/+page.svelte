@@ -15,10 +15,6 @@
 		Typeset in
 		<a href="https://www.arrowtype.com/name-sans" class="font-semibold underline text-primary"
 			>Name Sans</a
-		>
-		and
-		<a href="https://recursive.design" class="font-mono underline font-semibold text-primary"
-			>Recursive</a
 		>.
 	</li>
 	<li>

@@ -1,13 +1,13 @@
 <script>
 	import { fly } from 'svelte/transition';
-	import { backOut, quintOut } from 'svelte/easing';
+	import { quintOut } from 'svelte/easing';
 	import { country } from '../../stores';
 </script>
 
 <div class="flex flex-col" in:fly={{ x: -20, duration: 1000, delay: 600, easing: quintOut }}>
 	<div class="flex justify-between">
 		<div>Code</div>
-		<span class="font-extrabold font-mono">{$country.properties.adm0_a3}</span>
+		<span class="font-extrabold text-primary">{$country.properties.adm0_a3}</span>
 	</div>
 
 	<div class="flex justify-between">
