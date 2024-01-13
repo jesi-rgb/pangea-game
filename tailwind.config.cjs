@@ -5,8 +5,7 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['AT Name Sans', 'SF Pro', 'system-ui'],
-        mono: ['Recursive']
+        sans: ['AT Name Sans', 'SF Pro', 'system-ui']
       }
     }
   },

@@ -1,10 +1,4 @@
 @font-face {
-	font-family: 'Recursive';
-	src: local('Recursive'), url('/fonts/Recursive.ttf');
-	font-weight: 300 1000;
-}
-
-@font-face {
 	font-family: 'AT Name Sans';
 	src: local('AT Name Sans'),
 		url('https://jesi-rgb-fonts.s3.eu-west-3.amazonaws.com/AT-NameSansVariable.ttf');
