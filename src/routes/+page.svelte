@@ -24,8 +24,6 @@
 		countryList.set(newCountryList.sort());
 
 		loadingCountry.set(false);
-
-		console.log('loaded');
 	}
 </script>
 
@@ -53,9 +51,9 @@
 
 			<!-- name form -->
 			<div
-				class="xl:self-end gap-4 flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]"
+				class="xl:self-end gap-4 mt-12 flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]"
 			>
-				<div class="skeleton h-12 w-full" />
+				<div class="h-32 w-full" />
 			</div>
 		</div>
 
