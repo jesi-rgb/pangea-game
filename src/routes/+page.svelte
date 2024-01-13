@@ -10,6 +10,7 @@
 	import Footer from '../lib/components/Footer.svelte';
 
 	$: countryData = $country;
+	$: console.log($loadingCountry);
 
 	async function loadCountry() {
 		const countryPromise = await fetch('https://country-api-omega.vercel.app/random_country');
@@ -44,7 +45,7 @@
 			<div
 				class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-primary/5"
 			>
-				<div class="text-4xl mx-auto text-primary w-fit my-[50%]">Loading...</div>
+				<div class="text-4xl font-bold mx-auto text-primary w-fit my-[50%]">Loading...</div>
 			</div>
 
 			<!-- name form -->
@@ -72,7 +73,15 @@
 			</div>
 		</div>
 		<div class="flex flex-col xl:flex-row justify-between">
-			<Country country={countryData} />
+			{#if $loadingCountry}
+				<div
+					class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-primary/5"
+				>
+					<div class="text-4xl font-bold mx-auto text-primary w-fit my-[50%]">Loading...</div>
+				</div>
+			{:else}
+				<Country country={countryData} />
+			{/if}
 			<NameForm />
 		</div>
 

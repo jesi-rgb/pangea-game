@@ -17,6 +17,8 @@
 
 		const newCountry = await fetchCountry();
 		country.set(newCountry);
+
+		loadingCountry.set(false);
 	}
 </script>
 
