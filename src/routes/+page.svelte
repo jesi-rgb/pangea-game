@@ -10,7 +10,6 @@
 	import Footer from '../lib/components/Footer.svelte';
 
 	$: countryData = $country;
-	$: console.log($loadingCountry);
 
 	async function loadCountry() {
 		const countryPromise = await fetch('https://country-api-omega.vercel.app/random_country');
@@ -20,7 +19,6 @@
 		const countryListPromise = await fetch('https://country-api-omega.vercel.app/country_names');
 		const newCountryList = await countryListPromise.json();
 		countryList.set(newCountryList.sort((a, b) => a.name_long.localeCompare(b.name_long)));
-		console.log($countryList);
 
 		loadingCountry.set(false);
 	}
