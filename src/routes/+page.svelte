@@ -1,6 +1,9 @@
 <script>
 	import Country from '../lib/components/Country.svelte';
 	import NameForm from '../lib/components/NameForm.svelte';
+	import NumTries from '../lib/components/NumTries.svelte';
+	import Selection from '../lib/components/Selection.svelte';
+	import InputNames from '../lib/components/InputNames.svelte';
 	import Points from '../lib/components/Points.svelte';
 	import { country, countryList, loadingCountry } from '../stores';
 	import NextButton from '../lib/components/NextButton.svelte';
@@ -39,11 +42,20 @@
 				<NextButton />
 			</div>
 		</div>
+
+		<!-- country -->
 		<div class="flex flex-col xl:flex-row justify-between">
 			<div
 				class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-primary/5"
 			>
 				<div class="text-4xl mx-auto text-primary w-fit my-[50%]">Loading...</div>
+			</div>
+
+			<!-- name form -->
+			<div
+				class="xl:self-end gap-4 flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]"
+			>
+				<div class="skeleton h-12 w-full" />
 			</div>
 		</div>
 
@@ -64,11 +76,7 @@
 			</div>
 		</div>
 		<div class="flex flex-col xl:flex-row justify-between">
-			{#if countryData}
-				<Country country={countryData} />
-			{:else}
-				<div>loading</div>
-			{/if}
+			<Country country={countryData} />
 			<NameForm />
 		</div>
 
