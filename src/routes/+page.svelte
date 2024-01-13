@@ -1,9 +1,6 @@
 <script>
 	import Country from '../lib/components/Country.svelte';
 	import NameForm from '../lib/components/NameForm.svelte';
-	import NumTries from '../lib/components/NumTries.svelte';
-	import Selection from '../lib/components/Selection.svelte';
-	import InputNames from '../lib/components/InputNames.svelte';
 	import Points from '../lib/components/Points.svelte';
 	import { country, countryList, loadingCountry } from '../stores';
 	import NextButton from '../lib/components/NextButton.svelte';
@@ -21,7 +18,8 @@
 
 		const countryListPromise = await fetch('https://country-api-omega.vercel.app/country_names');
 		const newCountryList = await countryListPromise.json();
-		countryList.set(newCountryList.sort());
+		countryList.set(newCountryList.sort((a, b) => a.name_long.localeCompare(b.name_long)));
+		console.log($countryList);
 
 		loadingCountry.set(false);
 	}
