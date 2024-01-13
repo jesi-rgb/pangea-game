@@ -1,5 +1,5 @@
 <script>
-	import { correctAnswer, names, points } from '../../stores.js';
+	import { country, correctAnswer, names, points } from '../../stores.js';
 	import Answer from './Answer.svelte';
 	import CountryTrivia from './CountryTrivia.svelte';
 	import Distance from './Distance.svelte';
