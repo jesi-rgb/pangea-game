@@ -2,7 +2,7 @@
 	import { correctAnswer, country, names, distances } from '../../stores';
 	import { normalize } from 'normalize-diacritics';
 	import { distanceInKmBetweenEarthCoordinates, bearing } from '../utils';
-	import { cubicInOut, sineInOut } from 'svelte/easing';
+	import { cubicIn } from 'svelte/easing';
 
 	$: lastCountry = $names[$names.length - 1];
 	$: finishRound = $names.length >= 5 || $correctAnswer;
@@ -35,7 +35,7 @@
 		const distanceData = {
 			distance: distance,
 			realRatio: 1 - distance / antipodalDistance,
-			ratio: sineInOut(1 - distance / antipodalDistance) * 100,
+			ratio: cubicIn(1 - distance / antipodalDistance) * 100,
 			angle: angle
 		};
 
