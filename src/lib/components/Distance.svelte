@@ -2,6 +2,7 @@
 	import { correctAnswer, country, names, distances } from '../../stores';
 	import { normalize } from 'normalize-diacritics';
 	import { distanceInKmBetweenEarthCoordinates, bearing } from '../utils';
+	import { cubicInOut, sineInOut } from 'svelte/easing';
 
 	$: lastCountry = $names[$names.length - 1];
 	$: finishRound = $names.length >= 5 || $correctAnswer;
@@ -33,7 +34,8 @@
 
 		const distanceData = {
 			distance: distance,
-			ratio: (1 - distance / antipodalDistance) * 100,
+			realRatio: 1 - distance / antipodalDistance,
+			ratio: sineInOut(1 - distance / antipodalDistance) * 100,
 			angle: angle
 		};
 
@@ -54,7 +56,7 @@
 					</div>
 					<div>{'10'.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
 				</section>
-				<progress class="progress w-full progress-primary" value="0" max="100" />
+				<progress class="progress animate-pulse w-full progress-primary" value="0" max="100" />
 			</div>
 		{/if}
 	{:then distance}
