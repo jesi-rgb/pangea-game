@@ -1,5 +1,37 @@
-<footer
-	class="mt-20 w-[350px] mx-auto text-center xl:text-left xl:mx-0 xl:w-1/2 opacity-50 text-sm"
->
-	<a href="/about" class="underline w-fit">About</a>
+<footer class="mt-20">
+	<button onclick="about.showModal()" class="btn btn-outline btn-sm">About</button>
+
+	<dialog id="about" class="modal">
+		<div class="modal-box">
+			<div class="list-disc flex flex-col space-y-5">
+				<li>
+					Crafted with care by <a
+						href="https://jesirgb.com"
+						class="font-semibold underline text-primary">Jesús Rascón</a
+					>.
+				</li>
+				<li>
+					<a href="https://geojson-maps.ash.ms/" class="underline font-semibold text-primary"
+						>Data source</a
+					>.
+				</li>
+				<li>
+					Typeset in
+					<a href="https://www.arrowtype.com/name-sans" class="font-semibold underline text-primary"
+						>Name Sans</a
+					>.
+				</li>
+				<li>
+					Logo in
+					<a
+						class="font-semibold underline text-primary"
+						href="https://djr.com/notes/megazoid-italic-font-of-the-month">Megazoid Italic</a
+					>.
+				</li>
+			</div>
+		</div>
+		<form method="dialog" class="modal-backdrop">
+			<button>close</button>
+		</form>
+	</dialog>
 </footer>
