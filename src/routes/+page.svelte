@@ -12,11 +12,15 @@
 	$: countryData = $country;
 
 	async function loadCountry() {
-		const countryPromise = await fetch('https://country-api-omega.vercel.app/random_country');
+		const countryPromise = await fetch(
+			'https://pangea-countries-production.up.railway.app/random_country'
+		);
 		const newCountry = await countryPromise.json();
 		country.set(newCountry);
 
-		const countryListPromise = await fetch('https://country-api-omega.vercel.app/country_names');
+		const countryListPromise = await fetch(
+			'https://pangea-countries-production.up.railway.app/country_names'
+		);
 		const newCountryList = await countryListPromise.json();
 		countryList.set(newCountryList.sort((a, b) => a.name_long.localeCompare(b.name_long)));
 

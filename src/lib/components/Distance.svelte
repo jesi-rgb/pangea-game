@@ -13,7 +13,9 @@
 		}
 		const normalizedCountry = await normalize(lastCountry.replaceAll(' ', '').replaceAll("'", ''));
 
-		const promise = await fetch(`https://country-api-omega.vercel.app/info/${normalizedCountry}`);
+		const promise = await fetch(
+			`https://pangea-countries-production.up.railway.app/info/${normalizedCountry}`
+		);
 		const info = await promise.json();
 
 		const guessLat = info.label_y,
