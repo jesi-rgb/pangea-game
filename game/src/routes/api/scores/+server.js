@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { getDb } from '$lib/db';
+import { LEADERBOARD_API_URL } from '$lib/constants';
 
 export async function POST({ request }) {
 	try {
@@ -14,14 +14,22 @@ export async function POST({ request }) {
 			return json({ error: 'Valid score is required' }, { status: 400 });
 		}
 
-		const db = getDb();
-		const stmt = db.prepare('INSERT INTO leaderboard (player_name, score) VALUES (?, ?)');
-		const result = stmt.run(player_name, score);
-
-		return json({
-			success: true,
-			id: result.lastInsertRowid
+		// Forward to leaderboard API
+		const response = await fetch(`${LEADERBOARD_API_URL}/api/scores`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ player_name, score })
 		});
+
+		if (!response.ok) {
+			const errorData = await response.json().catch(() => ({ error: 'Failed to submit score' }));
+			return json(errorData, { status: response.status });
+		}
+
+		const data = await response.json();
+		return json(data);
 	} catch (error) {
 		console.error('Error submitting score:', error);
 		return json({ error: 'Failed to submit score' }, { status: 500 });

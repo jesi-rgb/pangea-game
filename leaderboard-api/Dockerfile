@@ -12,5 +12,5 @@ COPY --from=bun /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
 
 WORKDIR /usr/src
 
-COPY ./src/index.ts /usr/src/index.ts
+COPY ./src /usr/src
 

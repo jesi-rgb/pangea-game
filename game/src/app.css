@@ -1,18 +1,18 @@
+@font-face {
+	font-family: 'AT Name Sans Variable';
+	src: local('AT Name Sans Variable'), url('https://jesi-rgb-fonts.s3.eu-west-3.amazonaws.com/AT-NameSansVariable.ttf');
+	font-weight: 100 1000;
+}
+
 @import "tailwindcss";
 
 @plugin "daisyui" {
-	themes: fantasy --default, dracula --prefersdark;
+	themes: fantasy --default, night --prefersdark;
 }
 
-@font-face {
-	font-family: 'AT Name Sans Variable';
-	src: local('AT Name Sans Variable'),
-		url('https://jesi-rgb-fonts.s3.eu-west-3.amazonaws.com/AT-NameSansVariable.ttf');
-	font-weight: 300 1000;
-}
 
 @theme {
-	--font-sans: 'AT Name Sans Variable';
+	--font-sans: 'AT Name Sans Variable', sans-serif;
 
 	--color-muted: color-mix(in srgb, var(--color-base-content), var(--color-base-100) 50%);
 	--color-subtle: color-mix(in srgb, var(--color-base-content), var(--color-base-100) 70%);

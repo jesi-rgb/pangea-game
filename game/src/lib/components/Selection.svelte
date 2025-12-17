@@ -104,7 +104,7 @@
 					bind:ref={inputRef}
 					oninput={(e) => (searchValue = e.currentTarget.value)}
 					onkeydown={handleKeydown}
-					class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 pr-10 text-base  focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500"
+					class="w-full rounded-lg border border-subtle px-4 py-2 pr-10 text-base focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500"
 					placeholder="Enter a country name to search"
 					aria-label="Search for a country"
 				/>
@@ -120,7 +120,9 @@
 			</div>
 			<Combobox.Portal>
 				<Combobox.Content
-					class="z-50 max-h-96 w-(--bits-combobox-anchor-width) overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
+					class="z-50 max-h-96 w-(--bits-combobox-anchor-width)
+					bg-base-200
+					overflow-hidden rounded-lg border border-subtle shadow-lg"
 					sideOffset={8}
 				>
 					<Combobox.Viewport class="p-1">

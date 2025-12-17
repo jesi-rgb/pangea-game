@@ -85,28 +85,19 @@ const server = Bun.serve({
 			try {
 				const body = (await req.json()) as SubmitScoreRequest;
 
-			// Validate request body
-			if (!body.player_name || body.score === undefined) {
-				return jsonResponse(
-					{ error: 'Missing required fields: player_name and score' },
-					400,
-					origin
-				);
-			}
+				// Validate request body
+				if (!body.player_name || body.score === undefined) {
+					return jsonResponse(
+						{ error: 'Missing required fields: player_name and score' },
+						400,
+						origin
+					);
+				}
 
 				// Validate player name
 				const name = body.player_name.trim().toUpperCase();
 				if (name.length !== 4) {
 					return jsonResponse({ error: 'Player name must be exactly 4 characters' }, 400, origin);
-				}
-
-				if (!/^[A-Z]{4}$/.test(name)) {
-					return jsonResponse({ error: 'Player name must contain only letters A-Z' }, 400, origin);
-				}
-
-				// Validate score
-				if (typeof body.score !== 'number' || body.score < 0) {
-					return jsonResponse({ error: 'Score must be a non-negative number' }, 400, origin);
 				}
 
 				const entry = addScore(db, name, body.score);

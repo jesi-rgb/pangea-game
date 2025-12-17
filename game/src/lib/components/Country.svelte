@@ -16,7 +16,7 @@
 					geojson={geoObject}
 					styleAccessor={(feature) => ({
 						class:
-							'fill-primary-content stroke-primary stroke-2 drop-shadow-[0_2px_1px_rgba(109,0,117,0.15)]',
+							'fill-base-200 stroke-primary stroke-2 drop-shadow-[0_2px_1px_rgba(109,0,117,0.15)]',
 
 						'vector-effect': 'non-scaling-stroke'
 					})}

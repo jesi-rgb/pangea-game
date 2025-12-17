@@ -8,7 +8,7 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
 		<div class="modal-box">
 			<div class="list-disc flex flex-col space-y-5">
 				<li>
-					Crafted with care by <a
+					Krafted on Unikraft by <a
 						href="https://jesirgb.com"
 						class="font-semibold underline text-primary">Jesús Rascón</a
 					>.

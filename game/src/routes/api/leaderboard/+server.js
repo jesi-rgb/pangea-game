@@ -1,23 +1,20 @@
 import { json } from '@sveltejs/kit';
-import { getDb } from '$lib/db';
+import { LEADERBOARD_API_URL } from '$lib/constants';
 
-export function GET({ url }) {
+export async function GET({ url }) {
 	try {
-		const db = getDb();
-		const limit = parseInt(url.searchParams.get('limit') || '100');
+		const limit = url.searchParams.get('limit') || '100';
 
-		const entries = db
-			.prepare(
-				`
-				SELECT id, player_name, score, created_at 
-				FROM leaderboard 
-				ORDER BY score DESC, created_at ASC 
-				LIMIT ?
-			`
-			)
-			.all(limit);
+		// Forward to leaderboard API
+		const response = await fetch(`${LEADERBOARD_API_URL}/api/leaderboard?limit=${limit}`);
 
-		return json({ entries });
+		if (!response.ok) {
+			const errorData = await response.json().catch(() => ({ error: 'Failed to fetch leaderboard' }));
+			return json(errorData, { status: response.status });
+		}
+
+		const data = await response.json();
+		return json(data);
 	} catch (error) {
 		console.error('Error fetching leaderboard:', error);
 		return json({ error: 'Failed to fetch leaderboard' }, { status: 500 });

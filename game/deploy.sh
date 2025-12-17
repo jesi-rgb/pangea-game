@@ -6,7 +6,7 @@ echo "🚀 Deploying Pangea to Unikraft Cloud..."
 echo ""
 
 echo "Deleting old instance..."
-kraft cloud instance delete pangea
+kraft cloud instance delete pangea || true
 
 echo "Deploying new instance..."
 kraft cloud deploy \

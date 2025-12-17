@@ -12,4 +12,4 @@ export const countryList = writable([]);
 // Leaderboard stores
 export const playerName = writable('');
 export const gameEnded = writable(false);
-export const maxRounds = writable(4);
+export const maxRounds = writable(5);

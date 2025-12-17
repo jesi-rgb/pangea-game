@@ -12,7 +12,6 @@
 		loadingCountry,
 		country
 	} from '../../stores.js';
-	import { LEADERBOARD_API_URL } from '$lib/constants';
 	import { fetchCountry } from '$lib/utils';
 
 	let submitting = $state(false);
@@ -45,7 +44,7 @@
 		error = '';
 
 		try {
-			const response = await fetch(`${LEADERBOARD_API_URL}/api/scores`, {
+			const response = await fetch('/api/scores', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -114,7 +113,7 @@
 
 				<div class="form-control w-full mb-4">
 					<label class="label" for="player-name-input">
-						<span class="label-text">4-Letter Name (Arcade Style)</span>
+						<span class="label-text">4-Letter Name</span>
 					</label>
 					<input
 						id="player-name-input"
