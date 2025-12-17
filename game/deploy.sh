@@ -5,13 +5,8 @@ set -e
 echo "🚀 Deploying Pangea to Unikraft Cloud..."
 echo ""
 
-# Optional: Uncomment when you add tests
-# echo "Running tests..."
-# bun test
-# if [ $? -ne 0 ]; then
-#     echo "❌ Tests failed! Deployment cancelled."
-#     exit 1
-# fi
+echo "Deleting old instance..."
+kraft cloud instance delete pangea
 
 echo "Deploying new instance..."
 kraft cloud deploy \

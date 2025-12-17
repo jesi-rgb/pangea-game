@@ -5,8 +5,8 @@ set -e
 echo "🚀 Deploying Leaderboard API to Unikraft Cloud..."
 echo ""
 
-echo "Cleaning build cache..."
-docker system prune -f
+echo "Deleting old instance..."
+kraft cloud instance delete leaderboard-api
 
 echo "Deploying new instance (no cache)..."
 kraft cloud deploy \

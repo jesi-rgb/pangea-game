@@ -18,10 +18,8 @@ console.log(`📦 Using database at: ${DB_PATH}`);
 
 // Helper to add CORS headers
 function corsHeaders(origin: string | null): HeadersInit {
-	const allowedOrigin = origin && CORS_ORIGINS.includes(origin) ? origin : CORS_ORIGINS[0];
-
 	return {
-		'Access-Control-Allow-Origin': allowedOrigin,
+		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 		'Access-Control-Allow-Headers': 'Content-Type'
 	};
@@ -87,14 +85,14 @@ const server = Bun.serve({
 			try {
 				const body = (await req.json()) as SubmitScoreRequest;
 
-				// Validate request body
-				if (!body.player_name || !body.score === undefined) {
-					return jsonResponse(
-						{ error: 'Missing required fields: player_name and score' },
-						400,
-						origin
-					);
-				}
+			// Validate request body
+			if (!body.player_name || body.score === undefined) {
+				return jsonResponse(
+					{ error: 'Missing required fields: player_name and score' },
+					400,
+					origin
+				);
+			}
 
 				// Validate player name
 				const name = body.player_name.trim().toUpperCase();

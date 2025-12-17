@@ -14,11 +14,6 @@ export async function POST({ request }) {
 			return json({ error: 'Valid score is required' }, { status: 400 });
 		}
 
-		// Validate player name format (4 letters)
-		if (!/^[A-Z]{4}$/.test(player_name)) {
-			return json({ error: 'Player name must be exactly 4 uppercase letters' }, { status: 400 });
-		}
-
 		const db = getDb();
 		const stmt = db.prepare('INSERT INTO leaderboard (player_name, score) VALUES (?, ?)');
 		const result = stmt.run(player_name, score);
