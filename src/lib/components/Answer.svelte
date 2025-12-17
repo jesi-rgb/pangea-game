@@ -3,7 +3,7 @@
 	import { backInOut, backOut, quintOut } from 'svelte/easing';
 	import { correctAnswer, names, country } from '../../stores.js';
 
-	$: answer = $country['properties']['name_long'];
+	$: answer = $country['name_long'];
 
 	$: if ($names[$names.length - 1] == answer) {
 		$correctAnswer = true;

@@ -6,6 +6,8 @@
 	let geoObject = undefined;
 	$: if (country) {
 		geoObject = { type: 'FeatureCollection', features: [country] };
+
+		console.log(geoObject);
 	}
 </script>
 

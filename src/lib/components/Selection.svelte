@@ -2,7 +2,7 @@
 	import Select from 'svelte-select';
 	import { country, countryList, names, points, correctAnswer } from '../../stores';
 
-	$: answer = $country['properties']['name_long'];
+	$: answer = $country['name_long'];
 
 	$: choices = $countryList.filter((x) => !$names.includes(x['name_long']));
 	let label = 'name_long';
