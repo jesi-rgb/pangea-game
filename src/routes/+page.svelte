@@ -6,21 +6,18 @@
 	import NextButton from '../lib/components/NextButton.svelte';
 	import MetaStuff from '../lib/components/MetaStuff.svelte';
 	import logo from '$lib/pangea.svg';
+	import { API_BASE_URL } from '$lib/constants';
 
 	import Footer from '../lib/components/Footer.svelte';
 
 	$: countryData = $country;
 
 	async function loadCountry() {
-		const countryPromise = await fetch(
-			'https://pangea-countries-production.up.railway.app/random_country'
-		);
+		const countryPromise = await fetch(`${API_BASE_URL}/random_country`);
 		const newCountry = await countryPromise.json();
 		country.set(newCountry);
 
-		const countryListPromise = await fetch(
-			'https://pangea-countries-production.up.railway.app/country_names'
-		);
+		const countryListPromise = await fetch(`${API_BASE_URL}/country_names`);
 		const newCountryList = await countryListPromise.json();
 		countryList.set(newCountryList.sort((a, b) => a.name_long.localeCompare(b.name_long)));
 

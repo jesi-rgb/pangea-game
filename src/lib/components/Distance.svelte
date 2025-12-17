@@ -2,6 +2,7 @@
 	import { correctAnswer, country, names, distances } from '../../stores';
 	import { normalize } from 'normalize-diacritics';
 	import { distanceInKmBetweenEarthCoordinates, bearing } from '../utils';
+	import { API_BASE_URL } from '../constants';
 	import { cubicIn } from 'svelte/easing';
 
 	$: lastCountry = $names[$names.length - 1];
@@ -13,9 +14,7 @@
 		}
 		const normalizedCountry = await normalize(lastCountry.replaceAll(' ', '').replaceAll("'", ''));
 
-		const promise = await fetch(
-			`https://pangea-countries-production.up.railway.app/info/${normalizedCountry}`
-		);
+		const promise = await fetch(`${API_BASE_URL}/info/${normalizedCountry}`);
 		const info = await promise.json();
 
 		const guessLat = info.label_y,
