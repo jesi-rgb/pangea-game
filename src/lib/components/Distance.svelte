@@ -5,8 +5,8 @@
 	import { API_BASE_URL } from '../constants';
 	import { cubicIn } from 'svelte/easing';
 
-	$: lastCountry = $names[$names.length - 1];
-	$: finishRound = $names.length >= 5 || $correctAnswer;
+	let lastCountry = $derived($names[$names.length - 1]);
+	let finishRound = $derived($names.length >= 5 || $correctAnswer);
 
 	async function calculateDistance(lastCountry) {
 		if (lastCountry == undefined) {
@@ -15,29 +15,53 @@
 		const normalizedCountry = await normalize(lastCountry.replaceAll(' ', '').replaceAll("'", ''));
 
 		const promise = await fetch(`${API_BASE_URL}/info/${normalizedCountry}`);
+		if (!promise.ok) {
+			console.warn('Failed to fetch country info:', normalizedCountry, promise.status);
+			$distances = [...$distances, 'N/A'];
+			return undefined;
+		}
 		const info = await promise.json();
 
-		const guessLat = info.label_y,
-			guessLon = info.label_x;
+		const guessLat = info.properties.label_y,
+			guessLon = info.properties.label_x;
 
 		const countryLat = $country.properties.label_y,
 			countryLon = $country.properties.label_x;
 
-		const distance = distanceInKmBetweenEarthCoordinates(
-			countryLat,
-			countryLon,
-			guessLat,
-			guessLon
-		);
+		// Check if we have valid coordinates
+		if (guessLat == null || guessLon == null || countryLat == null || countryLon == null) {
+			console.warn('Missing coordinates:', {
+				guessLat,
+				guessLon,
+				countryLat,
+				countryLon,
+				country: lastCountry
+			});
+			$distances = [...$distances, 'N/A'];
+			return undefined;
+		}
+
+		let distance = distanceInKmBetweenEarthCoordinates(countryLat, countryLon, guessLat, guessLon);
+
+		// Ensure distance is a valid finite number
+		if (!Number.isFinite(distance)) {
+			console.warn('Invalid distance calculated:', { distance, lastCountry });
+			$distances = [...$distances, 'N/A'];
+			return undefined;
+		}
+
 		const antipodalDistance = 20000;
 
 		const angle = bearing(countryLat, countryLon, guessLat, guessLon);
 
+		const rawRatio = 1 - distance / antipodalDistance;
+		const ratio = cubicIn(rawRatio) * 100;
+
 		const distanceData = {
 			distance: distance,
-			realRatio: 1 - distance / antipodalDistance,
-			ratio: cubicIn(1 - distance / antipodalDistance) * 100,
-			angle: angle
+			realRatio: rawRatio,
+			ratio: Number.isFinite(ratio) ? ratio : 0,
+			angle: Number.isFinite(angle) ? angle : 0
 		};
 
 		$distances = [...$distances, distanceData.ratio.toFixed(2) + '%'];
@@ -52,12 +76,13 @@
 				<section class="flex justify-between tabular-nums">
 					<div class="flex items-center space-x-3 font-semibold">
 						<div class="flex space-x-3 items-center">
-							<span class="loading loading-bars loading-xs" /><span>Loading</span>
+							<span class="loading loading-bars loading-xs"></span><span>Loading</span>
 						</div>
 					</div>
 					<div>{'10'.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
 				</section>
-				<progress class="progress animate-pulse w-full progress-primary" value="0" max="100" />
+				<progress class="progress animate-pulse w-full progress-primary" value="0" max="100"
+				></progress>
 			</div>
 		{/if}
 	{:then distance}
@@ -78,7 +103,8 @@
 						</div>
 						<div>{distance.distance.toLocaleString('en-UK', { maximumFractionDigits: 2 })} km</div>
 					</section>
-					<progress class="progress w-full progress-primary" value={distance.ratio} max="100" />
+					<progress class="progress w-full progress-primary" value={distance.ratio} max="100"
+					></progress>
 				</div>
 			{/if}
 		{/if}

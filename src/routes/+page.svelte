@@ -2,15 +2,17 @@
 	import Country from '../lib/components/Country.svelte';
 	import NameForm from '../lib/components/NameForm.svelte';
 	import Points from '../lib/components/Points.svelte';
-	import { country, countryList, loadingCountry } from '../stores';
+	import { country, countryList, loadingCountry, gameEnded } from '../stores';
 	import NextButton from '../lib/components/NextButton.svelte';
 	import MetaStuff from '../lib/components/MetaStuff.svelte';
+	import GameOver from '../lib/components/GameOver.svelte';
 	import logo from '$lib/pangea.svg';
 	import { API_BASE_URL } from '$lib/constants';
 
 	import Footer from '../lib/components/Footer.svelte';
 
-	$: countryData = $country;
+	let countryData = $derived($country);
+	let showGameOver = $derived($gameEnded);
 
 	async function loadCountry() {
 		const countryPromise = await fetch(`${API_BASE_URL}/random_country`);
@@ -27,6 +29,10 @@
 
 <MetaStuff />
 
+{#if showGameOver}
+	<GameOver />
+{/if}
+
 {#await loadCountry()}
 	<main class="w-fit mx-auto xl:w-full">
 		<div class="flex justify-between">
@@ -42,7 +48,7 @@
 		<!-- country -->
 		<div class="flex flex-col xl:flex-row justify-between">
 			<div
-				class="h-[350px] w-[350px] md:w-[500px] md:h-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-primary/5"
+				class="size-[350px] md:size-[500px] border-4 border-dashed border-primary p-1 rounded-xl shadow-xl shadow-primary/5"
 			>
 				<div class="text-4xl font-bold mx-auto text-primary w-fit my-[50%]">Loading...</div>
 			</div>
@@ -51,7 +57,7 @@
 			<div
 				class="xl:self-end gap-4 mt-12 flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]"
 			>
-				<div class="h-32 w-full" />
+				<div class="h-32 w-full"></div>
 			</div>
 		</div>
 

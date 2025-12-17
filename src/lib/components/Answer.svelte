@@ -3,11 +3,13 @@
 	import { backInOut, backOut, quintOut } from 'svelte/easing';
 	import { correctAnswer, names, country } from '../../stores.js';
 
-	$: answer = $country['name_long'];
+	let answer = $derived($country.properties?.name_long);
 
-	$: if ($names[$names.length - 1] == answer) {
-		$correctAnswer = true;
-	}
+	$effect(() => {
+		if ($names.length > 0 && $names[$names.length - 1] === answer) {
+			$correctAnswer = true;
+		}
+	});
 </script>
 
 <div class="mt-8 xl:mt-0">

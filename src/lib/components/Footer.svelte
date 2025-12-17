@@ -1,5 +1,8 @@
-<footer class="mt-20">
-	<button onclick="about.showModal()" class="btn btn-outline btn-sm">About</button>
+<!-- @migration-task Error while migrating Svelte code: Event attribute must be a JavaScript expression, not a string
+https://svelte.dev/e/attribute_invalid_event_handler -->
+<footer class="mt-20 flex gap-2">
+	<a href="/leaderboard" class="btn btn-outline btn-sm">Leaderboard</a>
+	<button onclick={about.showModal()} class="btn btn-outline btn-sm">About</button>
 
 	<dialog id="about" class="modal">
 		<div class="modal-box">

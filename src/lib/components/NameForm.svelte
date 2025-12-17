@@ -1,5 +1,5 @@
 <script>
-	import { country, correctAnswer, names, points } from '../../stores.js';
+	import { correctAnswer, names, points } from '../../stores.js';
 	import Answer from './Answer.svelte';
 	import CountryTrivia from './CountryTrivia.svelte';
 	import Distance from './Distance.svelte';
@@ -7,11 +7,15 @@
 	import NumTries from './NumTries.svelte';
 	import Selection from './Selection.svelte';
 
-	$: finishRound = $names.length >= 5 || $correctAnswer;
+	let finishRound = $derived($names.length >= 5 || $correctAnswer);
+	let previousFinishRound = $state(false);
 
-	$: if (finishRound && !$correctAnswer) {
-		points.update((p) => Math.max(0, p - 50));
-	}
+	$effect(() => {
+		if (finishRound && !previousFinishRound && !$correctAnswer) {
+			points.update((p) => Math.max(0, p - 50));
+		}
+		previousFinishRound = finishRound;
+	});
 </script>
 
 <div class="xl:self-end flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]">

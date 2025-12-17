@@ -1,12 +1,40 @@
 <script>
-	import { loadingCountry, correctAnswer, country, names, distances, rounds } from '../../stores';
+	import {
+		loadingCountry,
+		correctAnswer,
+		country,
+		names,
+		distances,
+		rounds,
+		maxRounds,
+		gameEnded
+	} from '../../stores';
 	import { fetchCountry } from '../utils';
 
-	let button;
+	let button = $state();
 
-	$: finishRound = $correctAnswer || $names.length >= 5;
+	let finishRound = $derived($correctAnswer || $names.length >= 5);
+	let isLastRound = $derived($rounds >= $maxRounds);
+	let canAdvanceWithEnter = $state(false);
 
-	async function handleNextRound(e) {
+	// Add delay before allowing Enter to advance
+	$effect(() => {
+		if (finishRound) {
+			canAdvanceWithEnter = false;
+			const timer = setTimeout(() => {
+				canAdvanceWithEnter = true;
+			}, 500); // 500ms delay
+			return () => clearTimeout(timer);
+		}
+	});
+
+	async function handleNextRound() {
+		// Check if game should end
+		if (isLastRound) {
+			gameEnded.set(true);
+			return;
+		}
+
 		button.innerText = 'Loading...';
 
 		names.set([]);
@@ -23,11 +51,11 @@
 </script>
 
 {#if finishRound}
-	<button on:click={handleNextRound} bind:this={button} class="btn btn-primary">NEXT</button>
+	<button onclick={handleNextRound} bind:this={button} class="btn btn-primary">NEXT</button>
 {/if}
 
 <svelte:window
-	on:keydown={(e) => {
-		if (finishRound && e.key === 'Enter') handleNextRound();
+	onkeydown={(e) => {
+		if (finishRound && canAdvanceWithEnter && e.key === 'Enter') handleNextRound();
 	}}
 />

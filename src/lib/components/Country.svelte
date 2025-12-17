@@ -1,14 +1,9 @@
 <script>
 	import { BaseMap, FeatureLayer } from 'svelte-geo';
 
-	export let country;
+	let { country } = $props();
 
-	let geoObject = undefined;
-	$: if (country) {
-		geoObject = { type: 'FeatureCollection', features: [country] };
-
-		console.log(geoObject);
-	}
+	let geoObject = $derived({ type: 'FeatureCollection', features: [country] });
 </script>
 
 <div
@@ -30,7 +25,7 @@
 		{/key}
 	{:else}
 		<div class="flex space-x-3 mx-auto text-center w-min align-middle h-min my-[150px]">
-			<span class="loading loading-bars loading-lg" />
+			<span class="loading loading-bars loading-lg"></span>
 			<div class="text-5xl font-bold">Loading...</div>
 		</div>
 	{/if}
