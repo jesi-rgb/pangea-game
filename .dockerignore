@@ -1,0 +1,13 @@
+node_modules
+.svelte-kit
+build
+*.db
+*.db-*
+.env
+.env.*
+.git
+.gitignore
+*.log
+.DS_Store
+leaderboard-api
+README.md

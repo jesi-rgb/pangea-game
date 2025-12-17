@@ -19,27 +19,27 @@
 
 <div class="flex flex-col" in:fly={{ x: -20, duration: 1000, delay: 600, easing: quintOut }}>
 	<div class="flex justify-between">
-		<div>Code</div>
+		<div class="text-muted">Code</div>
 		<span class="font-extrabold text-primary">{triviaData.code}</span>
 	</div>
 
 	<div class="flex justify-between">
-		<div>Coordinates</div>
+		<div class="text-muted">Coordinates</div>
 		<span class="font-bold tabular-nums"
 			>{triviaData.coordinates.lat}, {triviaData.coordinates.lng}</span
 		>
 	</div>
 
 	<div class="flex justify-between tabular-nums">
-		<div>Population estimate</div>
+		<div class="text-muted">Population estimate</div>
 		<span class="font-bold">{triviaData.population}</span>
 	</div>
 	<div class="flex justify-between">
-		<div>Region</div>
+		<div class="text-muted">Region</div>
 		<span class="font-bold">{triviaData.region}</span>
 	</div>
 	<div class="flex justify-between">
-		<div>Subregion</div>
+		<div class="text-muted">Subregion</div>
 		<span class="font-bold">{triviaData.subregion}</span>
 	</div>
 

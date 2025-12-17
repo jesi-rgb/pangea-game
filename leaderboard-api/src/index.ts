@@ -6,12 +6,15 @@ const PORT = process.env.PORT || 3001;
 const CORS_ORIGINS = process.env.CORS_ORIGIN?.split(',') || [
 	'http://localhost:5173',
 	'http://localhost:4173',
-	'https://pangea.fra.unikraft.com'
+	'https://pangea.fra.unikraft.app'
 ];
 
-// Initialize database
-const db = new Database('leaderboard.db');
+// Initialize database - use volume path in production, local path in dev
+const DB_PATH = process.env.DATABASE_PATH || 'leaderboard.db';
+const db = new Database(DB_PATH);
 initDB(db);
+
+console.log(`📦 Using database at: ${DB_PATH}`);
 
 // Helper to add CORS headers
 function corsHeaders(origin: string | null): HeadersInit {

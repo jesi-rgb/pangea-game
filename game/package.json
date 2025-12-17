@@ -8,11 +8,11 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
-		"game": "bun --watch leaderboard-api/src/index.ts & vite dev"
+		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-node": "^5.4.0",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"autoprefixer": "^10.4.14",
@@ -34,6 +34,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tailwindcss/vite": "^4.1.18",
+		"better-sqlite3": "^12.5.0",
 		"bits-ui": "^2.14.4",
 		"tailwindcss": "^4.1.18"
 	}
