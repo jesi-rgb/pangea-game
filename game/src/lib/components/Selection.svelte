@@ -121,7 +121,7 @@
 			<Combobox.Portal>
 				<Combobox.Content
 					class="z-50 max-h-96 w-(--bits-combobox-anchor-width)
-					bg-base-200
+					bg-muted-bg
 					overflow-hidden rounded-lg border border-subtle shadow-lg"
 					sideOffset={8}
 				>

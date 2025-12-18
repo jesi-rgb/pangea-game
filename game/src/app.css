@@ -16,4 +16,10 @@
 
 	--color-muted: color-mix(in srgb, var(--color-base-content), var(--color-base-100) 50%);
 	--color-subtle: color-mix(in srgb, var(--color-base-content), var(--color-base-100) 70%);
+
+	--color-primary-muted: color-mix(in srgb, var(--color-primary), var(--color-base-100) 90%);
+	--color-primary-subtle: color-mix(in srgb, var(--color-primary), var(--color-base-100) 95%);
+
+	--color-muted-bg: color-mix(in oklch, var(--color-base-100), var(--color-base-content) 3%);
+	--color-subtle-bg: color-mix(in oklch, var(--color-base-100), var(--color-base-content) 1%);
 }
