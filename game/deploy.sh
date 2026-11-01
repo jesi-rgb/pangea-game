@@ -1,26 +1,44 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+METRO="${METRO:-fra}"
+NAME="pangea"
+SERVICE="pangea"
+IMAGE="${IMAGE:-jesi-rgb/pangea:latest}"
+PORT=3000 # must match PORT in Kraftfile
 
 echo "🚀 Deploying Pangea to Unikraft Cloud..."
 echo ""
 
-echo "Deleting old instance..."
-kraft cloud instance delete pangea || true
+echo "Building and pushing $IMAGE..."
+unikraft build . --arch x86_64 --output "$IMAGE"
 
-echo "Deploying new instance..."
-kraft cloud deploy \
-  -M 2048 \
-  --name pangea \
-  -g pangea \
-  --rollout=remove \
-  .
+if ! unikraft services get "$SERVICE" >/dev/null 2>&1; then
+  echo "Creating service '$SERVICE' (443 -> $PORT)..."
+  unikraft services create \
+    --metro "$METRO" \
+    --name "$SERVICE" \
+    --domain "$SERVICE" \
+    --service "443:$PORT/tls+http"
+fi
+
+if unikraft instances get "$NAME" >/dev/null 2>&1; then
+  echo "Deleting old instance..."
+  unikraft instances delete "$NAME"
+fi
+
+echo "Starting new instance..."
+unikraft run \
+  --metro "$METRO" \
+  --name "$NAME" \
+  --image "$IMAGE" \
+  --service "$SERVICE" \
+  --memory 2GiB \
+  --scale-to-zero policy=on,cooldown-time=5000
 
 echo ""
 echo "✅ Deployment complete!"
-echo "App should be available at: https://pangea.fra.unikraft.app"
-echo ""
-echo "Test endpoints:"
-echo "  App: https://pangea.fra.unikraft.app"
-echo "  Leaderboard API: https://pangea.fra.unikraft.app/api/leaderboard"
-echo "  Submit Score: https://pangea.fra.unikraft.app/api/scores"
+echo "App: https://$SERVICE.$METRO.unikraft.app"

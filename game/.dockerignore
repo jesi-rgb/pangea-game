@@ -1,0 +1,10 @@
+node_modules
+.svelte-kit
+build
+.unikraft
+*.db
+*.db-*
+.env
+.env.*
+*.log
+.DS_Store

@@ -1,4 +1,6 @@
-spec: v0.6
+spec: v0.7
+
+name: pangea
 
 runtime: base-compat:latest
 

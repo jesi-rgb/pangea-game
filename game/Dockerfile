@@ -16,29 +16,31 @@ RUN set -xe; \
     ln -sf /usr/share/zoneinfo/Etc/UTC /target/etc/localtime; \
     echo "Etc/UTC" > /target/etc/timezone;
 
-FROM node:20-alpine AS deps
+# Build natively: the output is platform-independent JS, and emulated x86_64
+# builds (e.g. on Apple Silicon) crash with SIGILL.
+FROM --platform=$BUILDPLATFORM oven/bun:alpine AS deps
 
 WORKDIR /app
 
-ENV HOST=0.0.0.0
-ENV PORT=3000
+COPY package.json bun.lockb /app/
 
-# Install build dependencies for native modules
-RUN apk add --no-cache python3 make g++
-
-COPY package.json bun.lockb* /app/
-
-RUN npm install --legacy-peer-deps
+RUN bun install --frozen-lockfile
 
 FROM deps AS build
 
 COPY . /app
 
-RUN npm run build
+RUN bun run build
 
-RUN mkdir -p /app/build && <<EOF cat >> /app/build/package.json
-{"type": "module"}
-EOF
+RUN echo '{"type": "module"}' > /app/build/package.json
+
+FROM oven/bun:alpine AS prod-deps
+
+WORKDIR /app
+
+COPY package.json bun.lockb /app/
+
+RUN bun install --frozen-lockfile --production
 
 FROM scratch
 
@@ -56,4 +58,4 @@ COPY --from=bun /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificate
 COPY --from=bun /blank /tmp
 
 COPY --from=build /app/build /app/build
-COPY --from=build /app/node_modules /app/node_modules
+COPY --from=prod-deps /app/node_modules /app/node_modules

@@ -55,22 +55,34 @@ The game will be available at `http://localhost:5173` and will connect to the le
 ### Environment Variables
 
 **Game** (`/game`):
-- `VITE_LEADERBOARD_API_URL` - URL of the leaderboard API (defaults to `http://localhost:3001`)
+- `PORT` / `HOST` - Server bind address in production (set to `3000` / `0.0.0.0` in `game/Kraftfile`)
+- Leaderboard and countries API URLs are hardcoded in `game/src/lib/constants.js`
 
 **Leaderboard API** (`/leaderboard-api`):
 - `PORT` - Server port (defaults to 3001)
 - `DATABASE_PATH` - Path to SQLite database (defaults to `leaderboard.db`)
-- `CORS_ORIGIN` - Comma-separated list of allowed origins
+- `CORS_ORIGIN` - Parsed but currently unused (API responds with `*`)
 
 ## Deployment
 
-Each application is deployed independently to separate Unikraft instances:
+Each application is deployed independently to Unikraft Cloud with the [`unikraft` CLI](https://unikraft.com/docs/cli). Prerequisites: `unikraft login` and a running Docker with a `buildkitd` container.
 
-1. **Game**: Deploy the SvelteKit app to your Unikraft instance
-2. **Leaderboard API**: Deploy the Bun server to a separate Unikraft instance
-3. Configure the game's `VITE_LEADERBOARD_API_URL` to point to the deployed leaderboard API
+```bash
+./deploy.sh               # preflight, leaderboard, then game, then endpoint checks
+./deploy.sh leaderboard   # only the leaderboard API
+./deploy.sh game          # only the game
+```
 
-See individual README files in each directory for deployment-specific instructions.
+`./deploy.sh` checks the CLI login, Docker, and BuildKit (starting a stopped `buildkitd` container), warns if the `pangea-countries` service has no instance, runs the per-app scripts, and finally checks `/health`, `/` and `/api/leaderboard` on the public URLs.
+
+The per-app scripts can also be run directly:
+
+```bash
+./leaderboard-api/deploy.sh   # https://pangea-leaderboard.fra.unikraft.app
+./game/deploy.sh              # https://pangea.fra.unikraft.app
+```
+
+Each builds and pushes the image, creates its service (and volume) if missing, and replaces the running instance. The game's server routes (`/api/leaderboard`, `/api/scores`) proxy to the leaderboard API URL in `game/src/lib/constants.js`.
 
 ## Architecture
 

@@ -83,44 +83,36 @@ Returns:
 
 ## Deployment to Unikraft Cloud
 
-### Prerequisites
-
-1. **Create a volume** (one-time setup):
-
-```bash
-kraft cloud volume create leaderboard-data --size 1G
-```
-
-2. **Deploy the API**:
+Requires the [`unikraft` CLI](https://unikraft.com/docs/cli) (`unikraft login`) and a running Docker/BuildKit.
 
 ```bash
 cd leaderboard-api
 ./deploy.sh
 ```
 
+The script builds and pushes `jesi-rgb/pangea-leaderboard:latest`, creates the `pangea-volume` volume and `pangea-leaderboard` service if missing, then replaces the `leaderboard-api` instance.
+
 ### Deployment Details
 
-- **Memory**: 256MB
-- **Port**: 3001 (exposed as HTTP)
-- **Instance name**: `leaderboard-pangea`
-- **Volume**: Mounted at `/data` for database persistence
-- **Database path**: `/data/leaderboard.db`
+- **Memory**: 800MiB
+- **Port**: 443 → 3001 via the `pangea-leaderboard` service
+- **Instance name**: `leaderboard-api`
+- **Volume**: `pangea-volume` mounted at `/mnt` for database persistence
+- **Database path**: `/mnt/leaderboard.db`
 
 The database persists across redeployments using Unikraft Cloud volumes.
 
 ### Production URL
 
-Once deployed, the API will be available at:
-
 ```
-https://leaderboard.pangea.fra.unikraft.app
+https://pangea-leaderboard.fra.unikraft.app
 ```
 
 ### Environment Variables
 
 - `PORT` - Server port (default: 3001)
-- `DATABASE_PATH` - SQLite database path (production: `/data/leaderboard.db`, dev: `leaderboard.db`)
-- `CORS_ORIGIN` - Allowed CORS origins (comma-separated)
+- `DATABASE_PATH` - SQLite database path (production: `/mnt/leaderboard.db`, dev: `leaderboard.db`)
+- `CORS_ORIGIN` - Parsed but currently unused; the API responds with `Access-Control-Allow-Origin: *`
 
 ## Database Schema
 

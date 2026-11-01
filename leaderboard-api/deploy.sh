@@ -1,37 +1,53 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+METRO="${METRO:-fra}"
+NAME="leaderboard-api"
+SERVICE="pangea-leaderboard"
+VOLUME="pangea-volume"
+IMAGE="${IMAGE:-jesi-rgb/pangea-leaderboard:latest}"
+PORT=3001 # default PORT in src/index.ts
 
 echo "🚀 Deploying Leaderboard API to Unikraft Cloud..."
 echo ""
 
-# Check if volume exists, create if not
-echo "Checking for persistent volume..."
-if ! kraft cloud volume list | grep -q "pangea-volume"; then
-  echo "Creating volume 'pangea-volume' (100 MiB)..."
-  kraft cloud volume create --size 100 --name pangea-volume
-else
-  echo "Volume 'pangea-volume' already exists"
+echo "Building and pushing $IMAGE..."
+unikraft build . --arch x86_64 --output "$IMAGE"
+
+if ! unikraft volumes get "$VOLUME" >/dev/null 2>&1; then
+  echo "Creating volume '$VOLUME'..."
+  unikraft volumes create --metro "$METRO" --name "$VOLUME" --size 100MiB
 fi
 
-echo "Deleting old instance..."
-kraft cloud instance delete leaderboard-api || true
+if ! unikraft services get "$SERVICE" >/dev/null 2>&1; then
+  echo "Creating service '$SERVICE' (443 -> $PORT)..."
+  unikraft services create \
+    --metro "$METRO" \
+    --name "$SERVICE" \
+    --domain "$SERVICE" \
+    --service "443:$PORT/tls+http"
+fi
 
-echo "Deploying new instance (no cache)..."
-kraft cloud deploy \
-  -M 800 \
-  -g pangea-leaderboard \
-  -n leaderboard-api \
-  -v pangea-volume:/mnt \
-  -e DATABASE_PATH=/mnt/leaderboard.db \
-  --rollout=remove \
-  .
+if unikraft instances get "$NAME" >/dev/null 2>&1; then
+  echo "Deleting old instance..."
+  unikraft instances delete "$NAME"
+fi
+
+echo "Starting new instance..."
+unikraft run \
+  --metro "$METRO" \
+  --name "$NAME" \
+  --image "$IMAGE" \
+  --service "$SERVICE" \
+  --memory 800MiB \
+  --volume "$VOLUME:/mnt" \
+  --env DATABASE_PATH=/mnt/leaderboard.db \
+  --scale-to-zero policy=on,cooldown-time=5000
 
 echo ""
 echo "✅ Deployment complete!"
-echo "API should be available at: https://leaderboard.pangea.fra.unikraft.app"
-echo ""
-echo "Test endpoints:"
-echo "  Health: https://leaderboard.pangea.fra.unikraft.app/health"
-echo "  Leaderboard: https://leaderboard.pangea.fra.unikraft.app/api/leaderboard"
-echo ""
+echo "Health: https://$SERVICE.$METRO.unikraft.app/health"
+echo "Leaderboard: https://$SERVICE.$METRO.unikraft.app/api/leaderboard"
