@@ -1,4 +1,50 @@
-import { API_BASE_URL } from './constants';
+import { normalize } from 'normalize-diacritics';
+import { cubicIn } from 'svelte/easing';
+import { API_BASE_URL, GUESS_POINTS } from './constants';
+
+/** @param {number} guessNumber 1-based guess on which the answer was found */
+export function pointsForGuess(guessNumber) {
+	return GUESS_POINTS[Math.min(guessNumber, GUESS_POINTS.length) - 1];
+}
+
+/**
+ * Distance, proximity (0–100, eased) and arrow rotation from a guess towards the target.
+ * Returns null when the guess has no usable coordinates.
+ */
+export async function measureGuess(guessName, target) {
+	const slug = await normalize(guessName.replaceAll(' ', '').replaceAll("'", ''));
+	const response = await fetch(`${API_BASE_URL}/info/${slug}`);
+	if (!response.ok) {
+		console.warn('Failed to fetch country info:', slug, response.status);
+		return null;
+	}
+	const info = await response.json();
+
+	const guessLat = info.properties.label_y,
+		guessLon = info.properties.label_x;
+	const targetLat = target.properties.label_y,
+		targetLon = target.properties.label_x;
+	if (guessLat == null || guessLon == null || targetLat == null || targetLon == null) {
+		console.warn('Missing coordinates:', { guessName, guessLat, guessLon, targetLat, targetLon });
+		return null;
+	}
+
+	const distance = distanceInKmBetweenEarthCoordinates(targetLat, targetLon, guessLat, guessLon);
+	if (!Number.isFinite(distance)) {
+		console.warn('Invalid distance calculated:', { distance, guessName });
+		return null;
+	}
+
+	const antipodalDistance = 20000;
+	const ratio = cubicIn(1 - distance / antipodalDistance) * 100;
+	const angle = bearing(targetLat, targetLon, guessLat, guessLon);
+
+	return {
+		distance,
+		ratio: Number.isFinite(ratio) ? ratio : 0,
+		angle: Number.isFinite(angle) ? angle : 0
+	};
+}
 
 export async function fetchCountry() {
 	const countryPromise = await fetch(`${API_BASE_URL}/random_country`);

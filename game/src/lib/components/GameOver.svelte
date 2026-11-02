@@ -1,5 +1,5 @@
 <script>
-	import { scale, fly } from 'svelte/transition';
+	import { scale, fly, fade } from 'svelte/transition';
 	import { backOut } from 'svelte/easing';
 	import {
 		points,
@@ -10,7 +10,8 @@
 		distances,
 		correctAnswer,
 		loadingCountry,
-		country
+		country,
+		maxRounds
 	} from '../../stores.js';
 	import { fetchCountry } from '$lib/utils';
 
@@ -85,110 +86,93 @@
 		country.set(newCountry);
 		loadingCountry.set(false);
 	}
-
-	function viewLeaderboard() {
-		window.location.href = '/leaderboard';
-	}
 </script>
 
 <div
-	class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
-	transition:fly={{ y: 20, duration: 300 }}
+	class="fixed inset-0 z-50 flex items-end justify-center bg-base-content/30 backdrop-blur-sm sm:items-center"
+	transition:fade={{ duration: 200 }}
 >
 	<div
-		class="bg-base-100 p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4"
-		transition:scale={{ duration: 300, easing: backOut }}
+		class="w-full max-w-md rounded-t-box border border-base-300 bg-base-100 p-6 shadow-2xl sm:mx-4 sm:rounded-box sm:p-8"
+		transition:scale={{ start: 0.9, duration: 300, easing: backOut }}
 	>
 		<div class="text-center">
-			<h2 class="text-4xl font-bold mb-2">GAME OVER!</h2>
+			<p class="text-xs font-semibold tracking-widest text-muted uppercase">Game over</p>
+			<div class="mt-3 text-7xl leading-none font-black text-primary tabular-nums">{$points}</div>
+			<p class="mt-2 text-muted">points across {$maxRounds} rounds</p>
+		</div>
 
-			<div class="bg-primary/10 rounded-xl p-6 mb-6">
-				<div class="text-6xl font-bold text-primary mb-2">{$points}</div>
-				<div class="text-lg text-muted">Final Score</div>
-			</div>
-
+		<div class="mt-8">
 			{#if !hasName}
-				<!-- Name entry form -->
-				<p class="text-muted mb-4">Enter your name to submit your score!</p>
-
-				<div class="form-control w-full mb-4">
-					<label class="label" for="player-name-input">
-						<span class="label-text">4-Letter Name</span>
-					</label>
-					<input
-						id="player-name-input"
-						type="text"
-						placeholder="ABCD"
-						class="input input-bordered input-primary input-lg w-full text-center text-2xl font-bold tracking-widest"
-						value={nameInput}
-						oninput={handleInput}
-						onkeydown={handleKeydown}
-						maxlength="4"
-						autofocus
-					/>
-					<label class="label">
-						<span class="label-text-alt">{nameInput.length}/4 characters {isValid ? '✓' : ''}</span>
-					</label>
-				</div>
+				<label class="block text-center text-sm font-semibold" for="player-name-input">
+					Enter your initials for the leaderboard
+				</label>
+				<input
+					id="player-name-input"
+					type="text"
+					placeholder="ABCD"
+					class="input mt-3 input-xl w-full indent-[0.5em] text-center text-3xl font-black tracking-[0.5em] uppercase placeholder:text-subtle focus:border-primary focus:ring-4 focus:ring-primary/15 focus:outline-none"
+					value={nameInput}
+					oninput={handleInput}
+					onkeydown={handleKeydown}
+					maxlength="4"
+					autocomplete="off"
+					autofocus
+				/>
+				<p class="mt-2 text-center text-xs text-muted tabular-nums">{nameInput.length}/4 letters</p>
 
 				<button
 					onclick={handleNameSubmit}
 					disabled={!isValid}
-					class="btn btn-primary btn-lg w-full mb-3"
+					class="btn mt-5 btn-block btn-lg btn-primary"
 				>
-					CONTINUE
+					Continue
 				</button>
-
-				<button onclick={playAgain} class="btn btn-outline w-full">PLAY AGAIN</button>
 			{:else if !submitted}
-				<p class="text-muted mb-6">Nice work, {$playerName}!</p>
+				<p class="text-center text-lg">
+					Nice work, <span class="font-black tracking-[0.2em]">{$playerName}</span>!
+				</p>
 
 				<button
 					onclick={submitScore}
 					disabled={submitting}
-					class="btn btn-primary btn-lg w-full mb-3"
+					class="btn mt-5 btn-block btn-lg btn-primary"
 				>
 					{#if submitting}
 						<span class="loading loading-spinner"></span>
-						Submitting...
+						Submitting…
 					{:else}
-						SUBMIT TO LEADERBOARD
+						Submit to leaderboard
 					{/if}
 				</button>
 
 				{#if error}
-					<div class="alert alert-error mb-3" transition:fly={{ y: -10, duration: 200 }}>
+					<div
+						role="alert"
+						class="alert mt-3 alert-soft alert-error"
+						transition:fly={{ y: -10, duration: 200 }}
+					>
 						<span>{error}</span>
 					</div>
 				{/if}
-
-				<button onclick={playAgain} class="btn btn-outline w-full">PLAY AGAIN</button>
 			{:else}
-				<p class="text-muted mb-6">Nice work, {$playerName}!</p>
-
-				<div class="alert alert-success mb-3" transition:fly={{ y: -10, duration: 200 }}>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="stroke-current shrink-0 h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
+				<div
+					role="alert"
+					class="alert alert-soft alert-success"
+					transition:fly={{ y: -10, duration: 200 }}
+				>
+					<svg class="size-5" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"
+						><path
+							d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"
+						/></svg
 					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
-					<span>Score submitted successfully!</span>
+					<span>Score submitted, {$playerName}!</span>
 				</div>
 
-				<button onclick={viewLeaderboard} class="btn btn-primary btn-lg w-full mb-3">
-					VIEW LEADERBOARD
-				</button>
-
-				<button onclick={playAgain} class="btn btn-outline w-full">PLAY AGAIN</button>
+				<a href="/leaderboard" class="btn mt-5 btn-block btn-lg btn-primary">View leaderboard</a>
 			{/if}
+
+			<button onclick={playAgain} class="btn mt-3 btn-block btn-ghost">Play again</button>
 		</div>
 	</div>
 </div>

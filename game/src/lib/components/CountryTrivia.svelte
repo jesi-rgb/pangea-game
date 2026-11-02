@@ -3,65 +3,37 @@
 	import { quintOut } from 'svelte/easing';
 	import { country } from '../../stores';
 
-	let triviaData = $derived({
-		code: $country.properties.adm0_a3,
-		coordinates: {
-			lat: $country.properties.label_y.toFixed(2),
-			lng: $country.properties.label_x.toFixed(2)
-		},
-		population: $country.properties.pop_est.toLocaleString(),
-		region: $country.properties.region_un,
-		subregion: $country.properties.subregion,
-		name: $country.properties.name,
-		nameLong: $country.properties.name_long
-	});
+	let p = $derived($country.properties);
+
+	let facts = $derived([
+		{ label: 'Code', value: p.adm0_a3 },
+		{ label: 'Coordinates', value: `${p.label_y.toFixed(2)}, ${p.label_x.toFixed(2)}` },
+		{ label: 'Population', value: p.pop_est.toLocaleString() },
+		{ label: 'Region', value: p.region_un },
+		{ label: 'Subregion', value: p.subregion }
+	]);
 </script>
 
-<div class="flex flex-col" in:fly={{ x: -20, duration: 1000, delay: 600, easing: quintOut }}>
-	<div class="flex justify-between">
-		<div class="text-muted">Code</div>
-		<span class="font-extrabold text-primary">{triviaData.code}</span>
-	</div>
+<div in:fly={{ y: 10, duration: 600, delay: 200, easing: quintOut }}>
+	<dl class="divide-y divide-base-300 text-sm">
+		{#each facts as fact (fact.label)}
+			<div class="flex justify-between gap-4 py-2">
+				<dt class="text-muted">{fact.label}</dt>
+				<dd class="text-right font-semibold tabular-nums">{fact.value}</dd>
+			</div>
+		{/each}
+	</dl>
 
-	<div class="flex justify-between">
-		<div class="text-muted">Coordinates</div>
-		<span class="font-bold tabular-nums"
-			>{triviaData.coordinates.lat}, {triviaData.coordinates.lng}</span
+	<a
+		class="btn mt-3 btn-block rounded-field btn-sm btn-ghost"
+		target="_blank"
+		href="https://www.google.com/maps?q={p.name_long}+{p.adm0_a3}"
+	>
+		<svg class="size-4" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"
+			><path
+				d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"
+			/></svg
 		>
-	</div>
-
-	<div class="flex justify-between tabular-nums">
-		<div class="text-muted">Population estimate</div>
-		<span class="font-bold">{triviaData.population}</span>
-	</div>
-	<div class="flex justify-between">
-		<div class="text-muted">Region</div>
-		<span class="font-bold">{triviaData.region}</span>
-	</div>
-	<div class="flex justify-between">
-		<div class="text-muted">Subregion</div>
-		<span class="font-bold">{triviaData.subregion}</span>
-	</div>
-
-	<div class="mt-5 flex justify-between align-baseline">
-		<div class="flex align-baseline">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="21"
-				height="21"
-				class="fill-primary"
-				viewBox="0 0 256 256"
-				><path
-					d="M48,96a80,80,0,1,1,80,80A80.09,80.09,0,0,1,48,96Zm146.46,69.28A96,96,0,0,1,58.72,29.54A8,8,0,1,0,47.18,18.46A112,112,0,0,0,120,207.71V224H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V207.72a111.21,111.21,0,0,0,69.54-30.9,8,8,0,1,0-11.08-11.54Z"
-				/></svg
-			>
-			View on Google Maps
-		</div>
-		<a
-			class="underline text-primary text-right font-bold"
-			target="_blank"
-			href="https://www.google.com/maps?q={triviaData.nameLong}+{triviaData.code}"
-			><span>{triviaData.name}</span></a
-		>
-	</div>
+		Open {p.name} in Google Maps
+	</a>
 </div>

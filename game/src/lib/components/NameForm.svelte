@@ -1,35 +1,35 @@
 <script>
-	import { correctAnswer, names, points } from '../../stores.js';
+	import { correctAnswer, names } from '../../stores.js';
+	import { MAX_GUESSES } from '$lib/constants';
 	import Answer from './Answer.svelte';
 	import CountryTrivia from './CountryTrivia.svelte';
-	import Distance from './Distance.svelte';
-	import InputNames from './InputNames.svelte';
+	import GuessList from './GuessList.svelte';
+	import NextButton from './NextButton.svelte';
 	import NumTries from './NumTries.svelte';
 	import Selection from './Selection.svelte';
 
-	let finishRound = $derived($names.length >= 5 || $correctAnswer);
-	let previousFinishRound = $state(false);
+	/** @type {{ ready: boolean }} */
+	let { ready } = $props();
 
-	$effect(() => {
-		if (finishRound && !previousFinishRound && !$correctAnswer) {
-			points.update((p) => Math.max(0, p - 50));
-		}
-		previousFinishRound = finishRound;
-	});
+	let finishRound = $derived($names.length >= MAX_GUESSES || $correctAnswer);
 </script>
 
-<div class="xl:self-end flex flex-col justify-between w-[350px] md:w-[500px] xl:w-[350px]">
-	<InputNames />
+<aside
+	class="flex flex-col gap-5 rounded-box border border-base-300 bg-base-100 p-5 shadow-sm lg:sticky lg:top-8"
+>
+	<div class="flex items-center justify-between">
+		<h2 class="text-xs font-semibold tracking-widest text-muted uppercase">Your guesses</h2>
+		<NumTries />
+	</div>
+
+	<GuessList />
 
 	<Answer />
-	<Distance />
 
 	{#if finishRound}
 		<CountryTrivia />
+		<NextButton />
 	{:else}
-		<div class="flex items-center justify-between xl:flex-row-reverse">
-			<NumTries />
-			<Selection />
-		</div>
+		<Selection disabled={!ready} />
 	{/if}
-</div>
+</aside>

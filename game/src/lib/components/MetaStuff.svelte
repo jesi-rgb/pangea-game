@@ -12,7 +12,7 @@
 		{ rel: 'apple-touch-icon', href: 'apple-touch-icon.png' },
 		{ rel: 'manifest', href: '/site.webmanifest' }
 	]}
-	additionalMetaTags={[{ property: 'theme-color', content: '#fff' }]}
+	additionalMetaTags={[{ name: 'theme-color', content: '#f6f3ee' }]}
 	keywords={[
 		'worldle',
 		'country',

@@ -9,33 +9,34 @@
 		maxRounds,
 		gameEnded
 	} from '../../stores';
-	import { fetchCountry } from '../utils';
+	import { MAX_GUESSES } from '$lib/constants';
+	import { fetchCountry } from '$lib/utils';
 
-	let button = $state();
+	let loading = $state(false);
 
-	let finishRound = $derived($correctAnswer || $names.length >= 5);
+	let finishRound = $derived($correctAnswer || $names.length >= MAX_GUESSES);
 	let isLastRound = $derived($rounds >= $maxRounds);
 	let canAdvanceWithEnter = $state(false);
 
-	// Add delay before allowing Enter to advance
+	// Delay Enter so the keypress that submitted the last guess doesn't also skip the round.
 	$effect(() => {
 		if (finishRound) {
 			canAdvanceWithEnter = false;
 			const timer = setTimeout(() => {
 				canAdvanceWithEnter = true;
-			}, 500); // 500ms delay
+			}, 500);
 			return () => clearTimeout(timer);
 		}
 	});
 
 	async function handleNextRound() {
-		// Check if game should end
+		if (loading) return;
 		if (isLastRound) {
 			gameEnded.set(true);
 			return;
 		}
 
-		button.innerText = 'Loading...';
+		loading = true;
 
 		names.set([]);
 		correctAnswer.set(false);
@@ -51,7 +52,16 @@
 </script>
 
 {#if finishRound}
-	<button onclick={handleNextRound} bind:this={button} class="btn btn-primary">NEXT</button>
+	<button onclick={handleNextRound} disabled={loading} class="btn btn-block btn-lg btn-primary">
+		{#if loading}
+			<span class="loading loading-sm loading-spinner"></span>
+		{:else}
+			{isLastRound ? 'See results' : 'Next country'}
+			<kbd class="kbd border-primary-content/30 bg-primary-content/15 text-primary-content kbd-sm"
+				>↵</kbd
+			>
+		{/if}
+	</button>
 {/if}
 
 <svelte:window

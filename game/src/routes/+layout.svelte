@@ -1,6 +1,7 @@
 <script>
 	import '../app.css';
-	import Footer from '../lib/components/Footer.svelte';
+	import SiteHeader from '$lib/components/SiteHeader.svelte';
+
 	/**
 	 * @typedef {Object} Props
 	 * @property {import('svelte').Snippet} [children]
@@ -10,6 +11,10 @@
 	let { children } = $props();
 </script>
 
-<main class="my-5 md:my-20 w-[95%] md:max-w-5xl mx-auto">
-	{@render children?.()}
-</main>
+<div class="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 py-5 md:px-8 md:py-8">
+	<SiteHeader />
+
+	<main class="mt-6 flex-1 md:mt-10">
+		{@render children?.()}
+	</main>
+</div>
