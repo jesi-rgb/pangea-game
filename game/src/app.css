@@ -85,6 +85,12 @@
 	--color-muted: color-mix(in oklab, var(--color-base-content), var(--color-base-100) 45%);
 	--color-subtle: color-mix(in oklab, var(--color-base-content), var(--color-base-100) 75%);
 
+	--color-primary-muted: color-mix(in srgb, var(--color-primary), var(--color-base-100) 90%);
+	--color-primary-subtle: color-mix(in srgb, var(--color-primary), var(--color-base-100) 95%);
+
+	--color-muted-bg: color-mix(in oklch, var(--color-base-100), var(--color-base-content) 3%);
+	--color-subtle-bg: color-mix(in oklch, var(--color-base-100), var(--color-base-content) 1%);
+
 	--animate-grow-x: grow-x 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 	@keyframes grow-x {
 		from {
