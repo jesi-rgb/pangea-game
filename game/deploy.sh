@@ -27,7 +27,17 @@ fi
 
 if unikraft instances get "$NAME" >/dev/null 2>&1; then
   echo "Deleting old instance..."
-  unikraft instances delete "$NAME"
+  # The delete request can time out while the instance is still stopping;
+  # the deletion carries on server-side, so wait for the name to be released.
+  unikraft instances delete "$NAME" || true
+  for _ in $(seq 1 60); do
+    unikraft instances get "$NAME" >/dev/null 2>&1 || break
+    sleep 5
+  done
+  if unikraft instances get "$NAME" >/dev/null 2>&1; then
+    echo "❌ Old instance '$NAME' still exists after 5 minutes" >&2
+    exit 1
+  fi
 fi
 
 echo "Starting new instance..."

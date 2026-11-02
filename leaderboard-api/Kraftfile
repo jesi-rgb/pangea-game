@@ -2,12 +2,9 @@ spec: v0.7
 
 name: pangea-leaderboard
 
-runtime: base-compat:latest
-
-labels:
-  cloud.unikraft.v1.instances/scale_to_zero.policy: "on"
-  cloud.unikraft.v1.instances/scale_to_zero.stateful: "false"
-  cloud.unikraft.v1.instances/scale_to_zero.cooldown_time_ms: 5000
+# Pinned: base-compat 15 (= latest since 2026-10-30) never finishes stopping,
+# so scale-to-zero leaves instances stuck in "stopping" and unroutable.
+runtime: base-compat:14
 
 rootfs: ./Dockerfile
 
